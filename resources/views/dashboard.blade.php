@@ -1,9 +1,11 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-            Perfil
-        </h1>
-    </x-slot>
+@extends('layouts.app')
+@section('title', 'Perfil')
+@section('header')
+    <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+        Perfil
+    </h1>
+@endsection
+@section('content')
     <div class="flex flex-col items-center">
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
             <img class="h-20 w-20 rounded-full object-cover mb-2 mt-2" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
@@ -23,4 +25,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

@@ -1,9 +1,25 @@
 <?php
 
+use App\Models\Anuncio;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $users = User::role('admin')->pluck('id');
+    $anuncios = Anuncio::where('status', 2)->whereIn('user_id', $users)->latest('published')->paginate();
+
+    /*if (auth::user()) {
+        $user = auth::user();
+        $cursosIds = $user->Asignacion->pluck('curso_id')->toArray();
+    
+        $anunciosCurso = Anuncio::where('status', 2)
+        ->whereIn('curso_id', $cursosIds)
+        ->latest('published_at')
+        ->get();
+        $anuncios = $anuncios->merge($anunciosCurso)->sortByDesc('published_at');
+    }*/
+    return view('welcome', compact('anuncios'));
 });
 
 Route::middleware([

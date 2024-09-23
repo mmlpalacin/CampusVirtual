@@ -5,18 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ $title ?? 'Campus Virtual' }}</title>
+        <title>@yield('title')</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+        
         <!-- Scripts -->
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Styles -->
         <style>
-            nav{background-color: rgb(7, 63, 7)}
+            .swiper-container { width: 50%; height: 50%;}
+            .swiper-slide { display: flex; justify-content: center; align-items: center;}
         </style>
         @livewireStyles
     </head>
@@ -26,7 +30,7 @@
         @auth
             @livewire('navigation-menu')
         @else
-            <nav x-data="{ open: false }" class="border-b border-gray-100">
+            <nav x-data="{ open: false }" style="background-color: rgb(7, 63, 7)" class="border-b border-gray-100">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between h-16">
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -74,24 +78,30 @@
         @endauth    
 
         <!-- Page Heading -->
-        @if (isset($header))
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                @yield('header')
+            </div>
+        </header>
 
         <!-- Page Content -->
         <main class="min-h-screen bg-gray-100">
-            {{ $slot }}
+            @yield('content')
         </main>
 
         @stack('modals')
-
         @livewireScripts
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var swiper = new Swiper('.swiper-container', {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                    loop: false,
+                });
+            });
+        </script>
         <footer class="py-16 text-center text-sm text-black">
-            mml
+            &copy; 2024 mml
         </footer>
     </body>
 </html>
