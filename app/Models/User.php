@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -46,4 +47,33 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class, 'alumno_id');
+    }
+
+    public function anuncio(){
+        return $this->hasMany(Anuncio::class);
+    }
+    public function inscripcion(){
+        return $this->hasOne(Inscripcion::class);
+    }
+
+    public function scopeAlumnosPorCurso(Builder $query, $cursoId)
+    {
+        return $query->whereHas('asignacion', function ($query) use ($cursoId) {
+            $query->where('curso_id', $cursoId)
+                  ->where('rol', 'alumno');
+        })->orderBy('lastname');
+    }
+    public function scopeProfesoresPorCurso(Builder $query, $cursoId)
+    {
+        return $query->whereHas('asignacion', function ($query) use ($cursoId) {
+            $query->where('curso_id', $cursoId);
+        })->whereHas('roles', function ($query) {
+            $query->where('name', 'profesor');
+        })->orderBy('lastname');
+    }
+
 }

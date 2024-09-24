@@ -2,8 +2,8 @@
 
 use App\Models\Anuncio;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+require __DIR__ . '/admin.php';
 
 Route::get('/', function () {
     $users = User::role('admin')->pluck('id');
