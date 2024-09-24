@@ -56,6 +56,29 @@
                         </x-dropdown>
                     </div>
 
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-dropdown align="left" width="60">
+                            <x-slot name="trigger">
+                                <span class="inline-flex rounded-md">           
+                                    <button type="button" class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-white hover:text-white focus:outline-none focus: transition ease-in-out duration-150">
+                                        Configuracion
+                                    </button>
+                                </span>
+                            </x-slot>
+                            <x-slot name="content">
+                                <div class="w-60">
+                                    <x-dropdown-link href="{{route('admin.configuracion.index')}}">
+                                        Configuracion
+                                    </x-dropdown-link>
+                                    <x-dropdown-link href="{#">
+                                        Mesas de Examen
+                                    </x-dropdown-link>
+                                </div>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <!-- Settings Dropdown -->
                     <div class="ms-3 relative">
