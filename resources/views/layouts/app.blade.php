@@ -100,7 +100,7 @@
                 });
             });
         </script>
-        <footer class="py-16 text-center text-sm text-black">
+        <footer style="background-color: rgb(7, 63, 7)" class="py-6 text-center text-sm text-white">
             &copy; 2024 mml
         </footer>
     </body>
