@@ -6,6 +6,7 @@ use App\Models\Configuracion as ModelsConfiguracion;
 use App\Models\Curso;
 use App\Models\Division;
 use App\Models\Especialidad;
+use App\Models\Turno;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
@@ -16,13 +17,13 @@ class Configuracion extends Component
     public $grados = [], $cooperadora = [], $dias = [], $jornadas = [];
     
     public $cursos = [];
-    public $nuevoGrado, $nuevaCooperadora;
-    public $especialidades, $divisiones;
+    public $nuevoGrado, $nuevaCooperadora, $nuevaEspecialidad, $nuevaDivision;
 
     public $diasDeLaSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
     public $jornadasDisponibles = ['Simple', 'Completa', 'Extendida', 'Doble Escolaridad'];
 
     public $mostrarCampo = [
+        'turno' => false,
         'grado' => false,
 	    'cooperadora' =>false,
         'especialidad' => false,
@@ -55,11 +56,28 @@ class Configuracion extends Component
 
     public function agregarElemento($tipo)
     {
-        $nuevoElemento = ($tipo === 'grado') ? $this->nuevoGrado : $this->nuevaCooperadora;
+        if (in_array($tipo, ['grado', 'cooperadora'])) {
+            $nuevoElemento = ($tipo === 'grado') ? $this->nuevoGrado : $this->nuevaCooperadora;
 
-        if ($nuevoElemento) {
-            ($tipo === 'grado') ? $this->grados[] = $nuevoElemento : $this->cooperadora[] = ['montos' => [ $nuevoElemento], 'grados' => []];
-            ($tipo === 'grado') ? $this->nuevoGrado = '' : $this->nuevaCooperadora = '';
+            if ($nuevoElemento) {
+                ($tipo === 'grado') ? $this->grados[] = $nuevoElemento : $this->cooperadora[] = ['montos' => [ $nuevoElemento], 'grados' => []];
+                ($tipo === 'grado') ? $this->nuevoGrado = '' : $this->nuevaCooperadora = '';
+            }
+        }else {
+            $model = match ($tipo) {
+                'division' => Division::class,
+                'turno' => Turno::class,
+                'especialidad' => Especialidad::class,
+                default => null,
+            };
+            if ($model) {
+                $fieldName = 'nueva' . ucfirst($tipo);
+                $this->validate([
+                    $fieldName => 'required|string|max:255',
+                ]);
+            }
+            $model::create(['name' => $this->$fieldName]);
+            $this->$fieldName = '';
         }
 	    $this->mostrarCampo[$tipo] = false;
     }
@@ -154,11 +172,15 @@ class Configuracion extends Component
                 'dias' => $this->dias,
             ]);
         }
+        
         return redirect()->route('admin.configuracion.index');
     }
 
     public function render()
     {
-        return view('livewire.configuracion');
+        $turnos = Turno::all();
+        $especialidades = Especialidad::all();
+        $divisiones = Division::all();
+        return view('livewire.configuracion', compact('divisiones', 'especialidades', 'turnos'));
     }
 }
