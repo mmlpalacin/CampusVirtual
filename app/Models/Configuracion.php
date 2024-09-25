@@ -10,8 +10,8 @@ class Configuracion extends Model
     use HasFactory;
     protected $table = 'configuracion';
 
-    protected $fillable = ['name', 'direccion', 'telefono', 'ciclo_lectivo', 'hora_inicio', 'hora_fin', 'tipo_evaluacion'];
-    protected $casts = ['grados' => 'json', 'cooperadora' => 'json', 'jornadas' => 'json', 'dias'  => 'json'];
+    protected $fillable = ['name', 'direccion', 'telefono', 'ciclo_lectivo', 'hora_inicio', 'hora_fin', 'tipo_evaluacion','grados', 'cooperadora', 'jornadas', 'dias'];
+    protected $casts = ['grados' => 'array', 'cooperadora' => 'array', 'jornadas' => 'array', 'dias'  => 'array'];
     
     public function getGradosDesglosadosAttribute()
     {

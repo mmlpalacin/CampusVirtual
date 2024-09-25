@@ -20,7 +20,7 @@
         <thead>
             <tr>
                 <th>Ciclo Lectivo</th>
-                <th>Monto Cooperadora</th>
+                <th>Monto/s Cooperadora</th>
                 <th>Hora Inicio Escuela</th>
                 <th>Hora Fin Escuela</th>
                 <th>Tipo de Evaluación</th>
@@ -31,9 +31,20 @@
             @foreach ($configuraciones as $configuracion)
                 <tr>
                     <td>{{ $configuracion->ciclo_lectivo }}</td>
-                    <td>{{ $configuracion->monto_cooperadora }}</td>
-                    <td>{{ $configuracion->hora_inicio_escuela }}</td>
-                    <td>{{ $configuracion->hora_fin_escuela }}</td>
+                    <td>
+                        @if(is_array($configuracion->cooperadora) && count($configuracion->cooperadora) > 0)
+                            @foreach($configuracion->cooperadora as $index => $cooperadora)
+                                {{ $cooperadora['montos'] ? implode('/', $cooperadora['montos']) : 'Sin monto' }}
+                                @if ($index < count($configuracion->cooperadora) - 1)
+                                    /
+                                @endif
+                            @endforeach
+                        @else
+                            Sin datos de cooperadora
+                        @endif
+                    </td>
+                    <td>{{ $configuracion->hora_inicio }}</td>
+                    <td>{{ $configuracion->hora_fin }}</td>
                     <td>{{ $configuracion->tipo_evaluacion }}</td>
                     <td>
                         <a href="{{ route('admin.configuracion.edit', $configuracion) }}" class="btn btn-warning btn-sm">Editar</a>
