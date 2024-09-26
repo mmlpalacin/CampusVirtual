@@ -16,11 +16,11 @@ class Horarios extends Component
     public $horarioData = [];
     public $buttonDisabled = false;
 
-    public function mount($cursoId)
+    public function mount($cursoId, $materiaId = null)
     {
         $this->cursoId = $cursoId;
-        $this->materias = Materia::all();
-        $this->profesores = User::role('profesor')->get();
+        $this->materias = Materia::MateriasPorCurso($this->cursoId)->get();
+        $this->profesores = User::profesoresPorCurso($this->cursoId)->get();
 
         $this->horarioData = $this->loadHorarios();
     }
@@ -38,7 +38,7 @@ class Horarios extends Component
                         'hora_inicio' => $item->hora_inicio,
                         'hora_fin' => $item->hora_fin,
                         'materia_id' => $item->materia_id,
-                        'profesor_id' => $item->user_id,
+                        'profesor_id' => $item->profesor_id,
                     ]];
                 })->toArray();
             })->toArray();
@@ -84,7 +84,7 @@ class Horarios extends Component
                         'hora_inicio' => $data['hora_inicio'],
                         'hora_fin' => $data['hora_fin'],
                         'materia_id' => $data['materia_id'],
-                        'user_id' => $data['profesor_id'] ?? null
+                        'profesor_id' => $data['profesor_id'] ?? null
                     ]);
                 } else {
                     // Crea un nuevo horario
@@ -94,7 +94,7 @@ class Horarios extends Component
                         'dia' => $dia,
                         'curso_id' => $this->cursoId,
                         'materia_id' => $data['materia_id'],
-                        'user_id' => $data['profesor_id'] ?? null
+                        'profesor_id' => $data['profesor_id'] ?? null
                     ]);
                 }
             }

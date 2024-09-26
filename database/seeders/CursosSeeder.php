@@ -49,16 +49,16 @@ class CursosSeeder extends Seeder
         DB::table('turnos')->insert($turnos);
 
         $cursos = [
-            ['name' => '7', 'turno_id' => 3, 'especialidad_id' => 2, 'division_id' => 11],
-            ['name' => '1', 'turno_id' => 1, 'especialidad_id' => 1, 'division_id' => 2],
+            ['name' => '7mo', 'turno_id' => 3, 'especialidad_id' => 2, 'division_id' => 11],
+            ['name' => '1ro', 'turno_id' => 1, 'especialidad_id' => 1, 'division_id' => 2],
         ];
         
         DB::table('cursos')->insert($cursos);
 
         $materias = [
-            ['name' => 'Matemáticas'],
-            ['name' => 'Lengua'],
-            ['name' => 'Educación Artística'],
+            [['name' => 'Matemáticas'], ['tipo' => 'aula']],    
+            [['name' => 'Lengua'], ['tipo' => 'aula']],
+            [['name' => 'Educación Artística'], ['tipo' => 'aula']],
         ];
 
         foreach ($materias as $materia) {

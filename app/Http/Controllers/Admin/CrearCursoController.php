@@ -21,7 +21,7 @@ class CrearCursoController extends Controller
     public function create()
     {
         $configuracion = Configuracion::orderBy('ciclo_lectivo', 'desc')->first();
-        $grados = $configuracion->grados_desglosados;
+        $grados = $configuracion->grados;
         $especialidades = Especialidad::all();
         $divisiones = Division::orderbyRaw('CAST(name AS UNSIGNED)')->get();
         $turnos = Turno::all();
@@ -46,7 +46,7 @@ class CrearCursoController extends Controller
     public function edit(Curso $curso)
     {
         $configuracion = Configuracion::orderBy('ciclo_lectivo', 'desc')->first();
-        $grados = $configuracion->grados_desglosados;
+        $grados = $configuracion->grados;
         $especialidades = Especialidad::all();
         $divisiones = Division::orderbyRaw('CAST(name AS UNSIGNED)')->get();
         $turnos = Turno::all();

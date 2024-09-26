@@ -3,7 +3,7 @@ use App\Http\Controllers\Admin\ConfiguracionController;
 use App\Http\Controllers\Admin\CrearCursoController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AnuncioController;
-use App\Livewire\Configuracion;
+use App\Models\Configuracion;
 use App\Models\Curso;
 use Illuminate\Support\Facades\Route;
 

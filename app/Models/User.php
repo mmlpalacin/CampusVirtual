@@ -67,18 +67,22 @@ class User extends Authenticatable
                   ->where('rol', 'alumno');
         })->orderBy('lastname');
     }
-    public function scopeProfesoresPorCurso(Builder $query, $cursoId)
+    
+    public function scopeProfesoresPorCurso(Builder $query, $cursoId, $materiaId = null)
     {
-        return $query->whereHas('asignacion', function ($query) use ($cursoId) {
+        return $query->whereHas('horarios', function ($query) use ($cursoId) {
             $query->where('curso_id', $cursoId);
+            if(isset($materiaId)){
+                $query->where('materia_id', $materiaId);
+            }
         })->whereHas('roles', function ($query) {
             $query->where('name', 'profesor');
-        })->orderBy('lastname');
+        })->orderBy('lastname');    
     }
 
     public function horarios()
     {
-        return $this->hasMany(Horario::class);
+        return $this->hasMany(Horario::class, 'profesor_id');
     }
 
     public function cursos()

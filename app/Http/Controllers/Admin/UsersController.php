@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Controller;
+use App\Models\Configuracion;
 use App\Models\Inscripcion;
 use App\Models\Materia;
 use Laravel\Fortify\Fortify;
@@ -46,15 +47,9 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
-        $roles = role::all();
-        $cursos = Curso::all();
+        $configuracion = Configuracion::orderBy('ciclo_lectivo', 'desc')->first();
 
-        if($user->hasRole('profesor')){
-            $materias = Materia::all();
-            return view ('admin.users.edit', compact('user', 'roles', 'cursos', 'materias'));
-        }else{
-        return view ('admin.users.edit', compact('user', 'roles', 'cursos'));
-        }
+        return view ('admin.users.edit', compact('user', 'configuracion'));
     }
 
     public function update(Request $request, user $user)

@@ -1,85 +1,45 @@
 @extends('layouts.app')
 @section('title', 'Ajustes de Usuario')
-
-@section('content')
-    <p class="h5">{{$user->name}}</p>
-    <table class="table">
-        <form action="{{route('admin.users.update', $user->id)}}" method="post">
-            @csrf
-            @method('PUT')
-                <thead>
-                    <tr>
-                        <th>Rol</th>
-                        <th>Curso</th>
-                        @if($user->hasRole('profesor'))
-                            <th>Materias</th>
-                        @endif
-                        <th colspan="2"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            @foreach ($roles as $role)
-                                <x-label for="role[]">{{$role->name}}
-                                <input type="radio" name="role[]" value="{{ $role->id }}" @if($user->roles->contains($role->id)) checked @endif class="rm-1"></x-label>
-                                <br>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach ($cursos as $curso)
-                            <x-label for="curso[]">
-                                {{ $curso->name }}°{{ $curso->division_id }}
-                                @if ($user->hasRole('alumno'))
-                                    <input type="radio" name="curso[]" value="{{ $curso->id }}"
-                                    {{ $user->inscripcion && $user->inscripcion->where('curso_id', $curso->id)->first() ? 'checked' : '' }}
-                                    class="rm-1">
-                                @else
-                                    <input type="checkbox" name="curso[]" value="{{ $curso->id }}"
-                                    {{ $user->asignacion && $user->asignacion->contains('curso_id', $curso->id) ? 'checked' : '' }}
-                                    class="rm-1">
-                                @endif
-                            </x-label>
-                            <br>
-                        @endforeach
-                        </td>
-                        @if($user->hasRole('profesor'))
-                        <td colspan="2">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <strong>Aula</strong>
-                                    @foreach ($materias->where('tipo', 'aula')->sortBy('name') as $materia)
-                                        <x-label for="materia[]">
-                                            {{ $materia->name }}
-                                            <input type="checkbox" name="materia[]" value="{{ $materia->id }}"
-                                            {{ $user->materias->contains($materia->id) ? 'checked' : '' }}
-                                            class="rm-1">
-                                        </x-label>
-                                        <br>
-                                    @endforeach
-                                </div>
-                                <div class="col-md-6">
-                                    <strong>Taller</strong>
-                                    @foreach ($materias->where('tipo', 'taller')->sortBy('name') as $materia)
-                                        <x-label for="materia[]">
-                                            {{ $materia->name }}
-                                            <input type="checkbox" name="materia[]" value="{{ $materia->id }}"
-                                            {{ $user->materias->contains($materia->id) ? 'checked' : '' }}
-                                            class="rm-1">
-                                        </x-label>
-                                        <br>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </td>
-                        @endif
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td><x-button type="submit">Asignar</x-button></td>
-                    </tr>
-                </tfoot>
-        </form>
-    </table>
+@section('header')
+    <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+        Editando Usuario
+    </h1>
 @endsection
+@section('content')
+    <livewire:user-asignacion :user="$user"/>
+@endsection
+<script>
+    const horaInicioEscuela = "{{ $configuracion->hora_inicio }}";
+    const horaFinEscuela = "{{ $configuracion->hora_fin }}";
+    function validateTime(input) 
+    {
+        const value = input.value;
+        const timePattern = /^(?:[0-9]|[01]\d|2[0-3]):([0-5]\d)(:([0-5]\d))?$/;
+            // ^ --> empieza la cadena.
+            // ?:[0-9] --> permite un solo digito del 0 al 9, por si alguien escribe, por ejemplo: 9:00, en lugar de 09:00.
+            // ([01]\d --> 0 empieza con 0 o 1 y un digito del uno al diez
+            // | 2[0-3]) --> o con un 2 seguido de un numero del 0 al 3.
+            // : --> se divide con dos puntos.
+            // ([0-5]\d) --> los minutos el primer digito va del 0 al 5 y despues un digito del 1 al 9.
+            // $ --> cierra la cadena.
+            // / / --> Delimitan el comienzo y el final de la busqueda para validar.
+        
+        if (!timePattern.test(value)) {
+            alert("Por favor, ingresa una hora válida en el formato HH:MM. Ejemplo: 13:30");
+            input.value = '';
+            return;
+        }
+
+        const [hours, minutes] = value.split(':').map(Number); 
+        const [minHours, minMinutes] = horaInicioEscuela.split(':').map(Number);
+        const [maxHours, maxMinutes] = horaFinEscuela.split(':').map(Number);
+        // value.split(':') --> divide el valor en odnde estan los dos puntos (:).
+        // .map(Number) --> convierte el texto a valor numerico.s
+
+        if (hours < minHours || (hours === minHours && minutes < minMinutes) ||
+        hours > maxHours || (hours === maxHours && minutes > maxMinutes)) {
+        alert(`Por favor, ingresa un horario entre ${horaInicioEscuela} y ${horaFinEscuela}.`);
+        input.value = '';
+        }
+    }
+</script>

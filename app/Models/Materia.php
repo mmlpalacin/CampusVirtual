@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Materia extends Model
 {
@@ -20,6 +21,13 @@ class Materia extends Model
     public function cursos()
     {
         return $this->hasManyThrough(Curso::class, Horario::class, 'materia_id', 'id', 'id', 'curso_id');
+    }
+
+    public function scopeMateriasPorCurso(Builder $query, $cursoId)
+    {
+        return $query->whereHas('horarios', function ($query) use ($cursoId) {
+            $query->where('curso_id', $cursoId);
+        })->orderBy('name');    
     }
 
     public function profesores()
