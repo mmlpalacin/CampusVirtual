@@ -127,19 +127,6 @@ class Configuracion extends Component
 
     public function submit()
     {
-        Log::info('Datos a guardar', [
-            'name' => $this->name,
-            'direccion' => $this->direccion,
-            'telefono' => $this->telefono,
-            'ciclo_lectivo' => $this->ciclo_lectivo,
-            'hora_inicio' => $this->hora_inicio,
-            'hora_fin' => $this->hora_fin,
-            'tipo_evaluacion' => $this->tipo_evaluacion,
-            'grados' => $this->grados,
-            'cooperadora' => $this->cooperadora,
-            'jornadas' => $this->jornadas,
-            'dias' => $this->dias,
-        ]);
         $this->validate();
 
         if (isset($this->configuracionId)) {

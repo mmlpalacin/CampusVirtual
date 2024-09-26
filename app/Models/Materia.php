@@ -11,4 +11,19 @@ class Materia extends Model
     protected $table = 'materias';
 
     protected $fillable = ['name', 'tipo'];
+
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class);
+    }
+
+    public function cursos()
+    {
+        return $this->hasManyThrough(Curso::class, Horario::class, 'materia_id', 'id', 'id', 'curso_id');
+    }
+
+    public function profesores()
+    {
+        return $this->hasManyThrough(User::class, Horario::class, 'materia_id', 'id', 'id', 'profesor_id');
+    }
 }

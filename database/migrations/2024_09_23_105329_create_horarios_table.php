@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('materia_id')->constrained('materias')->onDelete('cascade');
             $table->foreignId('curso_id')->constrained('cursos')->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('profesor_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('dia', 45)->nullable();
             $table->time('hora_inicio');
             $table->time('hora_fin');

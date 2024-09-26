@@ -20,7 +20,7 @@ class Horario extends Model
         return $this->belongsTo(Curso::class);
     }
 
-    public function user()
+    public function profesor()
     {
         return $this->belongsTo(User::class);
     }

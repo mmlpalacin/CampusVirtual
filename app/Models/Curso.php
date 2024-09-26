@@ -24,4 +24,19 @@ class Curso extends Model
     {
         return $this->belongsTo(Turno::class);
     }
+
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class);
+    }
+
+    public function materias()
+    {
+        return $this->hasManyThrough(Materia::class, Horario::class, 'curso_id', 'id', 'id', 'materia_id');
+    }
+
+    public function profesores()
+    {
+        return $this->hasManyThrough(User::class, Horario::class, 'curso_id', 'id', 'id', 'profesor_id');
+    }
 }

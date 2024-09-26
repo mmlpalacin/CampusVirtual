@@ -8,8 +8,8 @@
 @section('content')
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @foreach ($anuncios as $anuncio)
-                <div class="bg-white overflow-hidden shadow-xl mt-4 sm:rounded-lg">
+            @foreach ($anuncios as $anuncio) 
+                <div class="bg-white overflow-hidden pb-3 shadow-xl mt-4 sm:rounded-lg">
 
                     <p class="mb-1 card-text small text-muted mt-4 ml-4 text-left">{{$anuncio->published}}</p>
                     @if ($anuncio->curso)
@@ -30,7 +30,6 @@
                             </div>
                         @endif
                     </div>
-
                 </div>
             @endforeach
         </div>

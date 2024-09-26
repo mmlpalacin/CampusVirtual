@@ -29,6 +29,17 @@
                                     Mesas de Examen
                                 </x-dropdown-link>
                             </div>
+                            @can('admin.anuncio.create')
+                                <div class="w-60">
+                                    <p class="block px-4 py-2 text-xs text-gray-400">Crear Anuncios</p>
+                                    <x-dropdown-link href="{{route('admin.anuncio.index')}}">
+                                        Lista de Anuncios
+                                    </x-dropdown-link>
+                                    <x-dropdown-link href="{{route('admin.anuncio.create')}}">
+                                        Nuevo Anuncio
+                                    </x-dropdown-link>
+                                </div>
+                            @endcan
                         </x-slot>
                     </x-dropdown>
                 </div>

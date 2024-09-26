@@ -76,4 +76,18 @@ class User extends Authenticatable
         })->orderBy('lastname');
     }
 
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class);
+    }
+
+    public function cursos()
+    {
+        return $this->hasManyThrough(Curso::class, Horario::class, 'profesor_id', 'id', 'id', 'curso_id');
+    }
+
+    public function materias()
+    {
+        return $this->hasManyThrough(Materia::class, Horario::class, 'profesor_id', 'id', 'id', 'materia_id');
+    }
 }
