@@ -26,6 +26,43 @@
         </div>
         <x-section-border />
 
+        <!-- Multiple Image Inputs -->
+        <div class="post" style="display: flex; flex-direction: column;">
+            <br>
+            <x-label for="newImages">Selecciona una o más imágenes:</x-label>
+            <input type="file" wire:model="newImages" id="newImages" accept="image/*" multiple>
+            <br>
+
+            @if ($anuncio && $anuncio->image->count())
+                <div class="image-preview" style="display: flex; gap: 10px;">
+                <br>
+                    @foreach($anuncio->image as $image)
+                    <div style="position: relative;">
+                        <img style="max-width: 200px; vertical-align: middle; margin-right: 10px;" src="{{ Storage::url($image->url) }}">
+                        <button type="button" wire:click="deleteImage({{ $image->id }})" style=" position: absolute; top: 5px; right: 5px; background-color: rgba(0, 0, 0, 0.5); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; text-align: center; line-height: 20px; cursor: pointer; font-size: 14px;">
+                            &times;
+                        </button>
+                    </div>
+                    @endforeach
+                </div>
+            @elseif (!empty($temporaryImagePaths))
+                <div class="image-preview" style="display: flex; gap: 10px;">
+                    <br>
+                    @foreach($temporaryImagePaths as $tempPath)
+                        <div style="position: relative;">
+                            <img style="max-width: 200px; vertical-align: middle; margin-right: 10px;" src="{{ Storage::url($tempPath) }}">
+                            <button type="button" wire:click="deleteTempImage('{{ $tempPath }}')" style="position: absolute; top: 5px; right: 5px; background-color: rgba(0, 0, 0, 0.5); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; text-align: center; line-height: 20px; cursor: pointer; font-size: 14px;">
+                                &times;
+                            </button>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            @error('newImages.*') <small class="text-red">{{ $message }}</small> @enderror
+        </div>
+        <x-section-border/>
+
         @can('anuncio.curso')
             @foreach ($cursos as $curso)
                 <x-label for="curso">{{ $curso->name }}°{{ $curso->division_id }}

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('anuncios', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 45);
+            $table->string('title', 60);
             $table->enum('status', ['1', '2'])->default('1');
             $table->longText('body')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');

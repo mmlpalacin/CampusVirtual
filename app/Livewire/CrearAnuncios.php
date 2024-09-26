@@ -4,8 +4,10 @@ namespace App\Livewire;
 
 use App\Http\Requests\AnuncioRequest;
 use App\Models\Anuncio;
+use App\Models\Imagen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Livewire\WithFileUploads;
 use Livewire\Component;
@@ -14,7 +16,7 @@ class CrearAnuncios extends Component
 {
     use WithFileUploads;
     public $newImages = [], $temporaryImagePaths = [];
-    public $anuncioId, $title, $body, $status, $curso_id, $user_id;
+    public $anuncioId, $title, $body, $status, $curso_id, $user_id, $anuncio;
     public $isUploading;
     public $cursos;
 
@@ -22,6 +24,7 @@ class CrearAnuncios extends Component
     {
         $this->user_id = auth::user()->id;
         if($anuncio){
+            $this->anuncio = $anuncio;
             $this->anuncioId = $anuncio->id;
             $this->title = $anuncio->title;
             $this->body = $anuncio->body;
@@ -39,6 +42,41 @@ class CrearAnuncios extends Component
                 'user' => 'You are not authorized to perform this action.',
             ]);
         }
+    }
+
+    public function updatedNewImages()
+    {
+        $this->isUploading = true;
+        $this->validate([
+            'newImages.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        if ($this->newImages) {
+            foreach ($this->newImages as $image) {
+                $path = $image->store('anuncio', 'public');
+                
+                if ($this->anuncioId) {
+                    Imagen::create([
+                        'url' => $path,
+                        'imageable_id' => $this->anuncioId,
+                        'imageable_type' => Anuncio::class,
+                    ]);
+                } else {
+                    $this->temporaryImagePaths[] = $path;
+                }
+            }
+        }
+
+        $this->isUploading = false;
+    }
+
+    public function deleteImage($imageId)
+    {
+        if ($imageId) {
+            $image = Imagen::find($imageId);
+            Storage::disk('public')->delete($image->url);
+            $image->delete();
+        }
+        $this->anuncio->load('image');
     }
 
     public function submit()
@@ -74,6 +112,16 @@ class CrearAnuncios extends Component
         if($anuncio->status==2){
             $anuncio->published = now();
         }
+        foreach ($this->temporaryImagePaths as $path) {
+            Imagen::create([
+                'url' => $path,
+                'imageable_id' => $anuncio->id,
+                'imageable_type' => Anuncio::class,
+            ]);
+    
+            Storage::delete($path);
+        }
+        $this->temporaryImagePaths = [];
 
         $anuncio->save();
         return redirect()->route('admin.anuncio.index')->with('info', 'El anuncio se creo con exito');
