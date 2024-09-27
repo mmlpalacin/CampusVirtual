@@ -11,7 +11,7 @@ Route::get('/', function () {
     $users = User::role('admin')->pluck('id');
     $anuncios = Anuncio::where('status', 2)->whereIn('user_id', $users)->latest('published')->paginate();
     $user = Auth::user();
-    if ($user->role('alumno')) {
+    if ($user && $user->role('alumno')) {
         $cursoId = $user->inscripcion->pluck('curso_id')->first();
     
         $anunciosCurso = Anuncio::where('status', 2)
@@ -30,6 +30,8 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', function () {
         $user = auth::user();
-        return view('dashboard', compact('user'));
+        $role = $user->roles->first()->name;
+
+        return view('dashboard', compact('role'));
     })->name('dashboard');
 });

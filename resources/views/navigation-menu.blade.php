@@ -20,11 +20,11 @@
                                 </button>
                             </x-slot>
                             <x-slot name="content">
-                                <div class="w-60">
+                                <div>
                                     <x-dropdown-link href="/">
                                         Anuncios
                                     </x-dropdown-link>
-                                    <x-dropdown-link href="{#">
+                                    <x-dropdown-link href="{{route('admin.mesas.index')}}">
                                         Mesas de Examen
                                     </x-dropdown-link>
                                 </div>
@@ -61,7 +61,7 @@
                             </button>
                         </x-slot>
                         <x-slot name="content">
-                            <div class="w-60">
+                            <div>
                                 <x-dropdown-link href="{{route('admin.users.index')}}">
                                     Registro
                                 </x-dropdown-link>
@@ -94,17 +94,17 @@
                         </x-slot>
                         <x-slot name="content">
                             @can('admin.configuracion.index')
-                            <div class="w-60">
+                            <div>
                                 <x-dropdown-link href="{{route('admin.configuracion.index')}}">
                                     Configuracion
                                 </x-dropdown-link>
-                                <x-dropdown-link href="#">
+                                <x-dropdown-link href="{{route('admin.mesas.index')}}">
                                     Mesas de Examen
                                 </x-dropdown-link>
                             </div>
                             @endcan
                             @can('admin.cursos.index')
-                            <div class="w-60">
+                            <div>
                                 <p class="block px-4 py-2 text-xs text-gray-400">Cursos</p>
                                 <x-dropdown-link href="{{route('admin.cursos.index')}}">
                                     Lista de Cursos
@@ -205,7 +205,7 @@
                 <x-responsive-nav-link href="/">
                     Anuncios
                 </x-responsive-nav-link>
-                <x-responsive-nav-link href="{#">
+                <x-responsive-nav-link href="{{route('admin.mesas.index')}}">
                     Mesas de Examen
                 </x-responsive-nav-link>
                 @can('admin.anuncio.create')
@@ -259,7 +259,7 @@
                     Configuracion
                 </x-responsive-nav-link>
                 @endcan
-                <x-responsive-nav-link href="{#">
+                <x-responsive-nav-link href="{{route('admin.mesas.index')}}">
                     Mesas de Examen
                 </x-responsive-nav-link>
                 @can('admin.cursos.index')

@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    @if($user->role('alumno'))
+    @if($role === 'alumno')
         @livewire('calendario')
     @endif
 @endsection

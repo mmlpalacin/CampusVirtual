@@ -10,7 +10,7 @@ class MesaExamen extends Model
     use HasFactory;
     protected $table = 'mesa_examen';
 
-    protected $fillable = ['fecha', 'hora', 'anio', 'materia_id', 'user_id'];
+    protected $fillable = ['fecha', 'hora', 'grado', 'materia_id', 'user_id'];
 
     public function materia()
     {

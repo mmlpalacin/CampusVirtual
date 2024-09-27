@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ConfiguracionController;
 use App\Http\Controllers\Admin\CrearCursoController;
+use App\Http\Controllers\Admin\MesaExamenController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AnuncioController;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,8 @@ route::resource('/users', UsersController::class)->names('admin.users')->middlew
 Route::get('/users', [UsersController::class, 'index'])->name('admin.users.index')->middleware('can:admin.users.index');
 
 route::resource('configuracion', ConfiguracionController::class)->names('admin.configuracion');
+
+route::resource('mesas', MesaExamenController::class)->names('admin.mesas');
 
 route::resource('/cursos', CrearCursoController::class)->names('admin.cursos');
 
