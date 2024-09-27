@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function asistencias()
     {
-        return $this->hasMany(Asistencia::class, 'alumno_id');
+        return $this->hasMany(Asistencia::class, 'user_id');
     }
 
     public function anuncio(){

@@ -11,7 +11,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>alumnos</th>
+                    <th>Alumnos</th>
                     @can('prece.asistencia.create')
                         <th width="10px"><a href="{{route('prece.asistencia.create', $curso)}}"><x-button>Tomar Asistencia</x-button></a></th>
                         <th width="10px"><a href="{{route('prece.asistencia.index', $curso)}}"><x-button>Ver Asistencia</x-button></a></th>

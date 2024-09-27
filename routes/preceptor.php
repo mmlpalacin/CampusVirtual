@@ -9,4 +9,4 @@ Route::get('/mis-cursos', function () {
     return view('preceptor.lista-cursos', compact('cursos'));
 })->name('prece.curso.index'); //modificar
 
-route::resource('/asistencia', AsistenciaController::class)->names('prece.asistencia');
+route::resource('curso/{curso}/asistencia', AsistenciaController::class)->names('prece.asistencia');

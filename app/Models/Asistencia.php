@@ -16,4 +16,8 @@ class Asistencia extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function scopeAsistenciaPorA($query){
+        return $query->whereYear('date', now()->year);
+    }
 }
