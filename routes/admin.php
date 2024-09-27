@@ -1,11 +1,12 @@
 <?php
+
 use App\Http\Controllers\Admin\ConfiguracionController;
 use App\Http\Controllers\Admin\CrearCursoController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AnuncioController;
+use Illuminate\Support\Facades\Route;
 use App\Models\Configuracion;
 use App\Models\Curso;
-use Illuminate\Support\Facades\Route;
 
 route::resource('/users', UsersController::class)->names('admin.users')->middleware('can:admin.users.create')->except('index');
 Route::get('/users', [UsersController::class, 'index'])->name('admin.users.index')->middleware('can:admin.users.index');

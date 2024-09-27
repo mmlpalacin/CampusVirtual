@@ -56,15 +56,15 @@ class User extends Authenticatable
     public function anuncio(){
         return $this->hasMany(Anuncio::class);
     }
+
     public function inscripcion(){
         return $this->hasOne(Inscripcion::class);
     }
 
     public function scopeAlumnosPorCurso(Builder $query, $cursoId)
     {
-        return $query->whereHas('asignacion', function ($query) use ($cursoId) {
-            $query->where('curso_id', $cursoId)
-                  ->where('rol', 'alumno');
+        return $query->whereHas('inscripcion', function ($query) use ($cursoId) {
+            $query->where('curso_id', $cursoId);
         })->orderBy('lastname');
     }
     

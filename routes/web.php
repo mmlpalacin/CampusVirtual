@@ -4,6 +4,7 @@ use App\Models\Anuncio;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 require __DIR__ . '/admin.php';
+require __DIR__ . '/preceptor.php';
 
 Route::get('/', function () {
     $users = User::role('admin')->pluck('id');

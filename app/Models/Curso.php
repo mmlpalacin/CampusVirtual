@@ -10,6 +10,10 @@ class Curso extends Model
     use HasFactory;
     protected $fillable = ['name', 'turno_id', 'division_id', 'especialidad_id'];
 
+    public function anuncio(){
+        return $this->hasMany(Anuncio::class);
+    }
+    
     public function especialidad()
     {
         return $this->belongsTo(Especialidad::class);
