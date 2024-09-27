@@ -21,4 +21,9 @@ class Cooperadora extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function comprobantes()
+    {
+        return $this->morphMany(imagen::class, 'imageable');
+    }
 }

@@ -13,7 +13,7 @@ cd nombre-del-repositorio
 
 <h4 class="h4">Instalar carpeta node</h4>
 <p> npm install </p>
-<p> npm run dev </p>
+<p> npm run build</p>
 
 <h4 class="h4">Modificar archivo .env.example</h4>
 <p> renombrar a .env. Si no se encuentra el archivo, crear .env y copiar el siguiente texto</p>

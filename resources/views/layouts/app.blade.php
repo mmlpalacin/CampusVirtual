@@ -60,11 +60,11 @@
                                     </span>
                                 </x-slot>
                                 <x-slot name="content">
-                                    <div class="w-60">
-                                        <x-dropdown-link href="#">
+                                    <div>
+                                        <x-dropdown-link href="/">
                                             Anuncios
                                         </x-dropdown-link>
-                                        <x-dropdown-link href="{#">
+                                        <x-dropdown-link href="{{route('admin.mesas.index')}}">
                                             Mesas de Examen
                                         </x-dropdown-link>
                                     </div>

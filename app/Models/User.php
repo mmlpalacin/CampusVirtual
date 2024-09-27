@@ -94,4 +94,9 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Materia::class, Horario::class, 'profesor_id', 'id', 'id', 'materia_id');
     }
+    
+    public function cooperadora()
+    {
+        return $this->hasMany(Cooperadora::class); // Un alumno tiene muchos pagos a cooperadora
+    }
 }

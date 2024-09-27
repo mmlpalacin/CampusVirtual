@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('url', 45);
+            $table->string('url', 200);
             $table->string('imageable_type')->nullable();
             $table->unsignedBigInteger('imageable_id')->nullable();
             $table->foreign('imageable_id')->references('id')->on('anuncios')->onDelete('cascade');

@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Models\Anuncio;
+use App\Models\Cooperadora;
+use App\Models\Imagen;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 require __DIR__ . '/admin.php';
 require __DIR__ . '/preceptor.php';
+require __DIR__ . '/cooperadora.php';
 
 Route::get('/', function () {
     $users = User::role('admin')->pluck('id');
@@ -28,10 +32,5 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        $user = auth::user();
-        $role = $user->roles->first()->name;
-
-        return view('dashboard', compact('role'));
-    })->name('dashboard');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 });

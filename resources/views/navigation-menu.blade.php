@@ -93,16 +93,21 @@
                             </button>
                         </x-slot>
                         <x-slot name="content">
-                            @can('admin.configuracion.index')
                             <div>
-                                <x-dropdown-link href="{{route('admin.configuracion.index')}}">
-                                    Configuracion
+                                @can('admin.configuracion.index')
+                                    <x-dropdown-link href="{{route('admin.configuracion.index')}}">
+                                        Configuracion
+                                    </x-dropdown-link>
+                                @endcan
+                                @can('cooperadora.pagos.index')
+                                <x-dropdown-link href="{{route('cooperadora.pagos.index')}}">
+                                    Cooperadora
                                 </x-dropdown-link>
+                                @endcan
                                 <x-dropdown-link href="{{route('admin.mesas.index')}}">
                                     Mesas de Examen
                                 </x-dropdown-link>
                             </div>
-                            @endcan
                             @can('admin.cursos.index')
                             <div>
                                 <p class="block px-4 py-2 text-xs text-gray-400">Cursos</p>
@@ -258,6 +263,11 @@
                 <x-responsive-nav-link href="{{route('admin.configuracion.index')}}">
                     Configuracion
                 </x-responsive-nav-link>
+                @endcan
+                @can('cooperadora.pagos.index')
+                    <x-responsive-nav-link href="{{route('cooperadora.pagos.index')}}">
+                        Cooperadora
+                    </x-responsive-nav-link>
                 @endcan
                 <x-responsive-nav-link href="{{route('admin.mesas.index')}}">
                     Mesas de Examen
