@@ -19,6 +19,12 @@
 
         <!-- Styles -->
         <style>
+            .tarde { background-color: #fdfd96; }
+            .ausente { background-color: #f8d7da; }
+            .presente { background-color: #d4edda; }
+            .tarde-darker { background-color: #f8f8ae; }
+            .ausente-darker { background-color: #facbcb; }
+            .presente-darker { background-color: #c1e0c4; }
             .switch { position: relative; display: inline-block; width: 80px; height: 40px; } /* Increased width and height */
             .switch input { opacity: 0; width: 0; height: 0; }
             .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 40px; } /* Adjusted border-radius */

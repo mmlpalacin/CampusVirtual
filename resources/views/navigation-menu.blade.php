@@ -148,6 +148,10 @@
                                 Cuenta
                             </div>
 
+                            <x-dropdown-link href="{{ route('dashboard') }}">
+                                Perfil
+                            </x-dropdown-link>
+
                             <x-dropdown-link href="{{ route('profile.show') }}">
                                 Ajustes
                             </x-dropdown-link>
