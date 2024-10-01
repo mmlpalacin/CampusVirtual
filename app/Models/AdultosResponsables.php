@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class AdultosResponsables extends Model
 {
     use HasFactory;
-    protected $table = 'Adultos_responsables';
+    protected $table = 'adultos_responsables';
 
-    protected $fillable = ['inscripcion_id'];
+    protected $guarded = ['id'];
 
     public function inscripcion()
     {

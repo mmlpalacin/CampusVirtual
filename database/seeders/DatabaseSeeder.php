@@ -22,6 +22,13 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             LocalidadSeeder::class,
         ]);
+        
+        $generos = [
+            ['genero' => 'masculino'],
+            ['genero' => 'femenino'],
+        ];
+
+        DB::table('generos')->insert($generos);
 
         $anuncios = Anuncio::factory(10)->create();
 

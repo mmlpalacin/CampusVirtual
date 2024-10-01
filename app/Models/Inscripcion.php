@@ -9,7 +9,7 @@ class Inscripcion extends Model
 {
     use HasFactory;
     protected $table = 'inscripcion';
-    protected $fillable = ['user_id', 'curso_id', 'Inscripcioncol'];
+    protected $guarded = ['id'];
 
     public function user()
     {

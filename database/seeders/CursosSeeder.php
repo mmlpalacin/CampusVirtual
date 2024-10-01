@@ -56,9 +56,9 @@ class CursosSeeder extends Seeder
         DB::table('cursos')->insert($cursos);
 
         $materias = [
-            [['name' => 'Matemáticas'], ['tipo' => 'aula']],    
-            [['name' => 'Lengua'], ['tipo' => 'aula']],
-            [['name' => 'Educación Artística'], ['tipo' => 'aula']],
+            ['name' => 'Matemáticas', 'tipo' => 'aula'],    
+            ['name' => 'Lengua', 'tipo' => 'aula'],
+            ['name' => 'Educación Artística', 'tipo' => 'aula'],
         ];
 
         foreach ($materias as $materia) {

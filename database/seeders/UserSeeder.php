@@ -18,10 +18,7 @@ class UserSeeder extends Seeder
             'direccion' => '14 de Julio 2550',
             'telefono' => '2234567891',
             'ciclo_lectivo' => now()->year,
-            'grados' => json_encode([
-                "ciclo_basico" => ["1ero", "2do", "3ro"],
-                "ciclo_superior" => ["4to", "5to", "6to"]
-            ]),
+            'grados' => json_encode(["1ero", "2do", "3ro", "4to", "5to", "6to"]),
             'cooperadora' => json_encode([
                 "ciclo_basico" => [
                     "grados" => ["1ero", "2do", "3ro"],

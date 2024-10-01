@@ -50,7 +50,15 @@
                     </div>
                 @endcan
             </div>
-
+    
+            @can('alumno.datos.index')
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <x-nav-link href="{{ route('alumno.datos.index') }}" :active="request()->routeIs('alumno.datos.index')">
+                    Mis Datos
+                </x-nav-link>
+            </div>
+            @endcan
+    
             @can('admin.users.index')
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <div class="ms-3 relative">

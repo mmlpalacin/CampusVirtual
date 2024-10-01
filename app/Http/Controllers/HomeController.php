@@ -15,7 +15,7 @@ class HomeController extends Controller
         $role = $user->roles->first()->name;
         $configuracion = Configuracion::orderBy('ciclo_lectivo', 'desc')->first();
         $cooperadora = Cooperadora::where('user_id', $user->id)->where('configuracion_id', $configuracion->id)->first();
-        if($cooperadora){
+        if($cooperadora && $user->inscripcion && $user->inscripcion->curso){
             $gradoAlumno = $user->inscripcion->curso->name;
             $montoCooperadora = null;
             foreach ($configuracion->cooperadora as $item) {
