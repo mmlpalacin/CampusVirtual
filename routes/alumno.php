@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Alumno\CertificadoController;
 use App\Http\Controllers\Alumno\FormController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,10 @@ Route::middleware(['can:alumno.datos.create'])->group(function () {
     Route::get('/provincias/{paisId}', [FormController::class, 'getProvincias']);
     Route::get('/partidos/{provinciaId}', [FormController::class, 'getPartidos']);
     Route::get('/ciudades/{partidoId}', [FormController::class, 'getCiudades']);
+    
+    route::post('/formulario/alumno/imprimir/{id}', [FormController::class, 'imprimir'])->name('alumno.imprimir');
 
     Route::get('/alumno', [FormController::class, 'index'])->name('alumno.datos.index');
 });
+
+Route::post('/generando-certificado/{user}', [CertificadoController::class, 'certificado'])->name('alumno.certificado');

@@ -18,10 +18,8 @@
         <div class="form-row">        
             <div class="form-group">
                 <label>Enfermedad:</label>
-                <input type="radio" id="enfermedad1" name="enfermedad" value="1" {{ old('enfermedad', $inscripcion->enfermedad ?? '') == '1' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>
-                <label for="enfermedad1">Sí</label>
-                <input type="radio" id="enfermedad2" name="enfermedad" value="0" {{ old('enfermedad', $inscripcion->enfermedad ?? '') == '0' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>
-                <label for="enfermedad2">No</label>
+                <input type="radio" id="enfermedad1" name="enfermedad" value="1" {{ old('enfermedad', $inscripcion->enfermedad ?? '') == '1' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>Sí
+                <input type="radio" id="enfermedad2" name="enfermedad" value="0" {{ old('enfermedad', $inscripcion->enfermedad ?? '') == '0' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>No
             </div>
             
             <div class="form-group">
@@ -32,10 +30,8 @@
         <div class="form-row">        
             <div class="form-group">
                 <label>Alergia:</label>
-                <input type="radio" id="alergia1" name="alergia" value="1" {{ old('alergia', $inscripcion->alergia ?? '') == '1' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>
-                <label for="alergia1">Sí</label>
-                <input type="radio" id="alergia2" name="alergia" value="0" {{ old('alergia', $inscripcion->alergia ?? '') == '0' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>
-                <label for="alergia2">No</label>
+                <input type="radio" id="alergia1" name="alergia" value="1" {{ old('alergia', $inscripcion->alergia ?? '') == '1' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>Sí
+                <input type="radio" id="alergia2" name="alergia" value="0" {{ old('alergia', $inscripcion->alergia ?? '') == '0' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>No
             </div>
             
             <div class="form-group">
@@ -46,10 +42,8 @@
         <div class="form-row">        
             <div class="form-group">
                 <label>Tratamiento Permanente:</label>
-                <input type="radio" id="tratamiento_permanente1" name="tratamiento_permanente" value="1" {{ old('tratamiento_permanente', $inscripcion->tratamiento_permanente ?? '') == '1' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>
-                <label for="tratamiento_permanente1">Sí</label>
-                <input type="radio" id="tratamiento_permanente2" name="tratamiento_permanente" value="0" {{ old('tratamiento_permanente', $inscripcion->tratamiento_permanente ?? '') == '0' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>
-                <label for="tratamiento_permanente2">No</label>
+                <input type="radio" id="tratamiento_permanente1" name="tratamiento_permanente" value="1" {{ old('tratamiento_permanente', $inscripcion->tratamiento_permanente ?? '') == '1' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>Sí
+                <input type="radio" id="tratamiento_permanente2" name="tratamiento_permanente" value="0" {{ old('tratamiento_permanente', $inscripcion->tratamiento_permanente ?? '') == '0' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>No
             </div>
             
             <div class="form-group">
@@ -60,10 +54,8 @@
         <div class="form-row">        
             <div class="form-group">
                 <label>Limitación Física:</label>
-                <input type="radio" id="limitacion_fisica1" name="limitacion_fisica" value="1" {{ old('limitacion_fisica', $inscripcion->limitacion_fisica ?? '') == '1' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>
-                <label for="limitacion_fisica1">Sí</label>
-                <input type="radio" id="limitacion_fisica2" name="limitacion_fisica" value="0" {{ old('limitacion_fisica', $inscripcion->limitacion_fisica ?? '') == '0' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>
-                <label for="limitacion_fisica2">No</label>
+                <input type="radio" id="limitacion_fisica1" name="limitacion_fisica" value="1" {{ old('limitacion_fisica', $inscripcion->limitacion_fisica ?? '') == '1' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>Sí
+                <input type="radio" id="limitacion_fisica2" name="limitacion_fisica" value="0" {{ old('limitacion_fisica', $inscripcion->limitacion_fisica ?? '') == '0' ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>No
             </div>
             
             <div class="form-group">

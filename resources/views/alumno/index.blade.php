@@ -4,6 +4,10 @@
     <h1 class="font-semibold text-xl text-gray-800 leading-tight">
         Planilla de Inscripcion
     </h1>
+    <form action="{{ route('alumno.imprimir', $inscripcion) }}" method="POST" class="inline">
+        @csrf
+        <x-button type="submit" class="mr-4">Imprimir Ficha</x-button>
+    </form>
     <a href="{{route('alumno.datos.form1', $inscripcion ?? null)}}"><x-button>Inscribirse</x-button></a>
 @endsection
 @section('content')
@@ -13,6 +17,7 @@
         @include('alumno.inscripcion.form2')
         @include('alumno.inscripcion.form3')
         @include('alumno.inscripcion.form4')  
+        @include('alumno.inscripcion.form5')  
     @else
         Todavia no te inscribiste
     @endif

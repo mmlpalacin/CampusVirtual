@@ -183,10 +183,12 @@ class FormController extends Controller
         $partidos = Partido::all();
         $ciudades = Ciudad::all();
         $generos = Genero::all();
+        $configuracion = Configuracion::orderBy('ciclo_lectivo', 'desc')->first();
+        $grados = $configuracion->grados;
         $inscripcion = Inscripcion::where('user_id', $user->id)->first();
-
+        $padres = AdultosResponsables::where('inscripcion_id', $inscripcion->id);
         $editable = false;
-        $pdf = Pdf::loadView('alumno.datos.imprimir', compact('editable', 'inscripcion','user', 'paises', 'provincias', 'partidos', 'ciudades', 'generos'));
+        $pdf = Pdf::loadView('alumno.imprimir', compact('editable', 'grados', 'padres', 'inscripcion','user', 'paises', 'provincias', 'partidos', 'ciudades', 'generos'));
         return $pdf->stream('ficha_de_inscripcion.pdf');
     }
 }
