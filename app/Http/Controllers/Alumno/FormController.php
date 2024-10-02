@@ -131,7 +131,7 @@ class FormController extends Controller
         $provincias = [];
         $partidos = [];
         $ciudades = [];
-        $padres = AdultosResponsables::where('inscripcion_id', $inscripcion->id);
+        $padres = AdultosResponsables::where('inscripcion_id', $inscripcion->id)->get();
         $editable = true;
         return view('alumno.inscripcion.padres', compact('editable', 'padres','paises', 'provincias', 'partidos', 'ciudades'));
     }

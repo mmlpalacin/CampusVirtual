@@ -59,7 +59,7 @@
             </div>
             <div class="form-row">
 
-                @if ($tipo != 'tutor')
+                @if ($tipo != 'Tutor')
                     <div class="form-group">
                         <label for="{{ strtolower($tipo) }}[vive]">¿Vive?</label>
                         <select name="{{ strtolower($tipo) }}[vive]" >
