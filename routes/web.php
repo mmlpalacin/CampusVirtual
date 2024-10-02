@@ -17,13 +17,15 @@ Route::get('/', function () {
     $anuncios = Anuncio::where('status', 2)->whereIn('user_id', $users)->latest('published')->paginate();
     $user = Auth::user();
     if ($user && $user->role('alumno')) {
-        $cursoId = $user->inscripcion->pluck('curso_id')->first();
-    
-        $anunciosCurso = Anuncio::where('status', 2)
-        ->where('curso_id', $cursoId)
-        ->latest('published')
-        ->get();
-        $anuncios = $anuncios->merge($anunciosCurso)->sortByDesc('published');
+        if($user->inscripcion && $user->inscripcion->curso){
+            $cursoId = $user->inscripcion->curso_id;
+
+            $anunciosCurso = Anuncio::where('status', 2)
+            ->where('curso_id', $cursoId)
+            ->latest('published')
+            ->get();
+            $anuncios = $anuncios->merge($anunciosCurso)->sortByDesc('published');
+        }
     }
     return view('welcome', compact('anuncios'));
 });

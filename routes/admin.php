@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\ConfiguracionController;
-use App\Http\Controllers\Admin\CrearCursoController;
 use App\Http\Controllers\Admin\MesaExamenController;
+use App\Http\Controllers\Admin\CrearCursoController;
+use App\Http\Controllers\Admin\CrearRolController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AnuncioController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,8 @@ route::resource('configuracion', ConfiguracionController::class)->names('admin.c
 route::resource('mesas', MesaExamenController::class)->names('admin.mesas');
 
 route::resource('/cursos', CrearCursoController::class)->names('admin.cursos');
+
+route::resource('roles', CrearRolController::class)->names('admin.roles')->middleware('can:admin.roles.index');
 
 Route::match(['get', 'post'],'/cursos/{curso}/horario', function ($cursoId) {
     $curso = Curso::findOrFail($cursoId); // Busca el curso por ID

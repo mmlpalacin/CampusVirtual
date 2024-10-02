@@ -117,6 +117,17 @@
                                     Mesas de Examen
                                 </x-dropdown-link>
                             </div>
+                            @can('admin.roles.index')
+                            <div>
+                                <p class="block px-4 py-2 text-xs text-gray-400">Cursos</p>
+                                <x-dropdown-link href="{{route('admin.roles.index')}}">
+                                    Lista de Roles
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{route('admin.roles.create')}}">
+                                    Nuevo Rol
+                                </x-dropdown-link>
+                            </div>
+                            @endcan
                             @can('admin.cursos.index')
                             <div>
                                 <p class="block px-4 py-2 text-xs text-gray-400">Cursos</p>
