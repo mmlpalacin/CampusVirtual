@@ -18,13 +18,13 @@
         <h2 class="text-lg font-bold mb-1">{{ Auth::user()->lastname }}, {{ Auth::user()->name }}</h2>
         <h3 class="text-sm text-gray-600">{{ Auth::user()->email }}</h3>
     </div>
-    <div class="py-12">
+    <!--<div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 
             </div>
         </div>
-    </div>
+    </div>-->
     @if($role === 'alumno')
     <x-section-border />
     <div class="text-center items-center">

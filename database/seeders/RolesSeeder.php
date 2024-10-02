@@ -65,6 +65,7 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'alumno.datos.index', 'description' => 'Ver datos del alumno'])->syncRoles($role4);
         Permission::create(['name' => 'alumno.datos.create', 'description' => 'Crear formulario con datos del alumno'])->syncRoles($role4);
         Permission::create(['name' => 'alumno.datos.edit', 'description' => 'Editar los datos del alumno'])->syncRoles($role4);
+        Permission::create(['name' => 'alumno.certificado', 'description' => 'Pedir certificado de alumno regular'])->syncRoles($role4);
 
         //cooperadora
         Permission::create(['name' => 'cooperadora.pagos.index', 'description' => 'Ver los pagos del alumno'])->syncRoles($role5);

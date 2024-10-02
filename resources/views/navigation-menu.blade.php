@@ -13,7 +13,6 @@
                     $user = auth()->user();
                 @endphp
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <!-- Settings Dropdown -->
                     <div class="ms-3 relative">
                         <x-dropdown align="left" width="48">
                             <x-slot name="trigger">
@@ -135,27 +134,29 @@
             </div>
             @endif
 
+            @can('alumno.certificado')
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <div class="ms-3 relative">
-                    <x-dropdown align="left" width="60">
+                    <x-dropdown align="left" width="48">
                         <x-slot name="trigger">
-                            <button class="inline-flex leading-4 text-sm border-2 border-transparent rounded-full focus: transition">
+                            <button class="flex text-sm border-2 border-transparent rounded-full focus: transition">
                                 Certificado
                             </button>
                         </x-slot>
                         <x-slot name="content">
-                            <div>                 
+                            <div class="px-2">      
                                 <form action="{{ route('alumno.certificado', $user) }}" method="POST">
                                     @csrf
-                                    <x-label for="autoridades_field" class="block px-4 py-2 text-gray-400">Autoridades</x-label>
-                                    <input type="text" id="autoridades_field" name="autoridades"  class="form-control ml-2 mr-2" required @click.stop>
-                                    <x-button class="ml-3">Obtener certificado</x-button>
+                                    <x-label for="autoridades_field" class="block py-2 text-xs text-gray-400">Autoridades</x-label>
+                                    <input type="text" id="autoridades_field" name="autoridades" class="block w-full px-2 py-2 text-start text-sm leading-5" required @click.stop>
+                                    <x-button class="mt-2 items-center">Obtener certificado</x-button>
                                 </form>
                             </div>
                         </x-slot>
                     </x-dropdown>
                 </div>
             </div>
+            @endcan
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <!-- Settings Dropdown -->
@@ -316,9 +317,24 @@
         </div>
         @endif
 
+        @can('alumno.certificado')
+        <div class="pt-2 pb-1 border-t border-gray-200 dark:border-gray-600">
+            <div class="pt-2 pb-3 ps-3 pe-4 space-y-1">
+                <button type="button" class="border-l-4 border-transparent block w-full py-2 text-start" id="btncertificado" onclick="see('certificado')">Certificado de Alumno Regular</button>
+                <form action="{{ route('alumno.certificado', $user) }}" method="POST" id="certificado" class="ps-3 text-start" style="display: none;">
+                    @csrf
+                    <label class="text-xs" for="autoridades_field">Autoridades a Presentar</label>
+                    <input type="text" id="autoridades_field" class="form-control" name="autoridades" required @click.stop>
+                    <div class="flex items-center justify-end mt-2">
+                        <button class="text-xs">Obtener Certificado</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @endcan
+
         <div class="pt-2 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="pt-2 pb-3 space-y-1">
-                <!-- Account Management -->
                 <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                     Perfil
                 </x-responsive-nav-link>
@@ -327,10 +343,8 @@
                     Ajustes
                 </x-responsive-nav-link>
 
-                <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}" x-data>
                     @csrf
-
                     <x-responsive-nav-link href="{{ route('logout') }}"
                                    @click.prevent="$root.submit();">
                         Cerra Sesion
@@ -340,3 +354,10 @@
         </div>
     </div>
 </nav>
+
+<script>
+    function see(id){
+        document.getElementById(id).style.display = 'block';
+        document.getElementById('btn' + id).style.display = 'none';
+    }
+</script>
