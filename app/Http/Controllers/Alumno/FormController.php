@@ -84,9 +84,15 @@ class FormController extends Controller
     public function form3(Inscripcion $inscripcion)
     {
         $paises = Pais::all();
-        $provincias = [];
-        $partidos = [];
-        $ciudades = [];
+        if($inscripcion->pais_id === null){
+            $provincias = [];
+            $partidos = [];
+            $ciudades = [];
+        }else{
+            $provincias = Provincia::all();
+            $partidos = Partido::all();
+            $ciudades = Ciudad::all();
+        }
         $editable = true;
         return view('alumno.inscripcion.form3', compact('inscripcion', 'editable','paises', 'provincias', 'partidos', 'ciudades'));
     }
@@ -127,11 +133,12 @@ class FormController extends Controller
 
     public function Padres(Inscripcion $inscripcion)
     {
-        $paises = Pais::all();
+        $padres = AdultosResponsables::where('inscripcion_id', $inscripcion->id)->get();
+        $paises = Pais::all();    
         $provincias = [];
         $partidos = [];
         $ciudades = [];
-        $padres = AdultosResponsables::where('inscripcion_id', $inscripcion->id)->get();
+
         $editable = true;
         return view('alumno.inscripcion.padres', compact('editable', 'padres','paises', 'provincias', 'partidos', 'ciudades'));
     }
@@ -139,18 +146,22 @@ class FormController extends Controller
     public function PadresStore(AdultosResponsables $padres, TutorRequest $request)
     {
         $inscripcion = Inscripcion::where('user_id', auth::user()->id)->first();
-        $padres = AdultosResponsables::where('inscripcion_id', $inscripcion->id);
+        $padres = AdultosResponsables::where('inscripcion_id', $inscripcion->id)->get();
 
         foreach (['padre', 'madre', 'tutor'] as $tipo) {
             $data = $request->input(strtolower($tipo));
     
             if ($data) {
-                $data['tipo'] = strtolower($tipo); // Agregar tipo
-                $data['inscripcion_id'] = $inscripcion->id; // Agregar inscripcion_id
+                $data['tipo'] = strtolower($tipo);
+                $data['inscripcion_id'] = $inscripcion->id;
     
-                AdultosResponsables::updateOrCreate(
-                    $data
-                );
+                $existingPadre = $padres->where('tipo', $data['tipo'])->first();
+
+                if ($existingPadre) {
+                    $existingPadre->update($data);
+                }else{
+                    AdultosResponsables::Create($data);
+                }
             }
         }
         $editable = false;

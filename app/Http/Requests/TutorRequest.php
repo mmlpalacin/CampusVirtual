@@ -22,10 +22,7 @@ class TutorRequest extends FormRequest
             $rules["{$tipo}.nivel_mas_alto"] = 'required|in:primario,secundario,terciario,universitario';
             $rules["{$tipo}.completo_nivel"] = 'required|boolean';
             $rules["{$tipo}.vive"] = 'required|boolean';
-            if ($this->input('padre.vive') === true) {
-                
-        }
-
+        
             if ($this->input("{$tipo}.vive") === true) {
                 $rules["{$tipo}.tipo_documento"] = 'required|string|max:255';
                 $rules["{$tipo}.numero_documento"] = 'required|string|max:255';

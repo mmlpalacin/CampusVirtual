@@ -137,9 +137,9 @@
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <div class="ms-3 relative">
-                    <x-dropdown align="right" width="48">
+                    <x-dropdown align="left" width="60">
                         <x-slot name="trigger">
-                            <button class="flex text-sm border-2 border-transparent rounded-full focus: transition">
+                            <button class="inline-flex leading-4 text-sm border-2 border-transparent rounded-full focus: transition">
                                 Certificado
                             </button>
                         </x-slot>
@@ -148,7 +148,7 @@
                                 <form action="{{ route('alumno.certificado', $user) }}" method="POST">
                                     @csrf
                                     <x-label for="autoridades_field" class="block px-4 py-2 text-gray-400">Autoridades</x-label>
-                                    <input type="text" id="autoridades_field" name="autoridades"  class="form-control ml-2 mr-2" required>
+                                    <input type="text" id="autoridades_field" name="autoridades"  class="form-control ml-2 mr-2" required @click.stop>
                                     <x-button class="ml-3">Obtener certificado</x-button>
                                 </form>
                             </div>

@@ -8,6 +8,7 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CertificadoController extends Controller
 {
@@ -17,11 +18,11 @@ class CertificadoController extends Controller
             'autoridades' => 'required'
         ]);
         $user = Auth::user();
-
+        Log::info($user . $user->inscripcion . $user->inscripcion->curso);
         $user = [
             'name' => $user->lastname . ', ' . $user->name,
-            'curso' =>  $user->inscripcion->curso->name . '°' . $user->inscripcion->curso->division->name . ', ' . $user->inscripcion->curso->especialidad->name,
-            'turno' => $user->inscripcion->curso->turno,
+            'curso' =>  $user->inscripcion->curso->name . ' ' . $user->inscripcion->curso->division->name . ', ' . $user->inscripcion->curso->especialidad->name,
+            'turno' => $user->inscripcion->curso->turno->name,
             'dia' => date('d'),
             'mes' => \Carbon\Carbon::now()->locale('es')->translatedFormat('F'),
             'year' => date('Y'),

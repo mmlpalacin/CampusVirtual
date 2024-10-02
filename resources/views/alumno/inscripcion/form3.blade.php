@@ -53,43 +53,46 @@
         <div class="form-row" id="alumnoForm">
             <div class="form-group">
                 <label for="pais">País:</label>
-                <select id="pais" name="pais_id">
+                <select id="pais" name="pais_id" {{ $editable ? '' : 'disabled' }}>
                     <option value="">Seleccione un país</option>
                     @foreach($paises as $pais)
                         <option value="{{ $pais->id }}" {{ old('pais_id', $inscripcion->pais_id ?? '') == $pais->id ? 'selected' : '' }}>{{ $pais->pais }}</option>
                     @endforeach
                 </select>
+                @error('pais_id')
+                    <small class="text-danger">{{$message}}</small>
+                @enderror
             </div>
-            @error('pais_id')
-                <small class="text-danger">{{$message}}</small>
-            @enderror
-            <div class="form-group"> 
+                
+            <div class="form-group">
                 <label for="provincia">Provincia:</label>
-                <select id="provincia" name="provincia_id" {{ old('provincia_id', $inscripcion->provincia_id?? '') ? '' : 'disabled' }}>
+                <select id="provincia" name="provincia_id" {{ old('provincia_id', $inscripcion->provincia_id?? '') ? '' : 'disabled' }}  {{ $editable ? '' : 'disabled' }}>
                     <option value="">Seleccione una provincia</option>
                     @foreach($provincias as $provincia)
                         <option value="{{ $provincia->id }}" {{ old('provincia_id', $inscripcion->provincia_id ?? '') == $provincia->id ? 'selected' : '' }}>{{ $provincia->provincia }}</option>
                     @endforeach
                 </select>
+                @error('provincia_id')
+                    <small class="text-danger">{{$message}}</small>
+                @enderror
             </div>
-            @error('provincia_id')
-                <small class="text-danger">{{$message}}</small>
-            @enderror
-            <div class="form-group"> 
+                
+            <div class="form-group">
                 <label for="partido">Partido:</label>
-                <select id="partido" name="partido_id" {{ old('partido_id', $inscripcion->partido_id?? '') ? '' : 'disabled' }}>
-                    <option value="">Seleccione un partido</option>
-                    @foreach($partidos as $partido)
-                        <option value="{{ $partido->id }}" {{ old('partido_id', $inscripcion->partido_id ?? '') == $partido->id ? 'selected' : '' }}>{{ $partido->partido }}</option>
-                    @endforeach
+                <select id="partido" name="partido_id" {{ old('partido_id', $inscripcion->partido_id?? '') ? '' : 'disabled' }}  {{ $editable ? '' : 'disabled' }}>
+                        <option value="">Seleccione un partido</option>
+                        @foreach($partidos as $partido)
+                            <option value="{{ $partido->id }}" {{ old('partido_id', $inscripcion->partido_id ?? '') == $partido->id ? 'selected' : '' }}>{{ $partido->partido }}</option>
+                        @endforeach
                 </select>
+                @error('partido_id')
+                    <small class="text-danger">{{$message}}</small>
+                @enderror
             </div>
-            @error('partido_id')
-                <small class="text-danger">{{$message}}</small>
-            @enderror
-            <div class="form-group"> 
+                
+            <div class="form-group">
                 <label for="ciudad">Ciudad:</label>
-                <select id="ciudad" name="ciudad_id" {{ old('ciudad_id', $inscripcion->ciudad_id?? '') ? '' : 'disabled' }}>
+                <select id="ciudad" name="ciudad_id" {{ old('ciudad_id', $inscripcion->ciudad_id?? '') ? '' : 'disabled' }}  {{ $editable ? '' : 'disabled' }}>
                     <option value="">Seleccione una ciudad</option>
                     @foreach($ciudades as $ciudad)
                         <option value="{{ $ciudad->id }}" {{ old('ciudad_id', $inscripcion->ciudad_id ?? '') == $ciudad->id ? 'selected' : '' }}>{{ $ciudad->ciudad }}</option>
@@ -97,6 +100,7 @@
                 </select>
             </div>
         </div>
+
         <div class="form-row">    
             <div class="form-group">
                 <label for="telefono">Teléfono:</label>
