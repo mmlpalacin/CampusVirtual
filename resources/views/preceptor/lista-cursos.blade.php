@@ -27,10 +27,10 @@
                             <td>{{$curso->especialidad->name}}</td>
     
                             @can('admin.horario.edit')
-                            <td width="10px"><a href="{{ route('horario', $curso) }}"><x-button>Editar Horario</x-button></a></td>
+                            <td width="10px"><x-a href="{{ route('horario', $curso) }}">Editar Horario</x-a></td>
                             @endcan
     
-                            <td width="10px"><a href="{{route('prece.asistencia.create', $curso)}}"><x-button>Tomar Asistencia</x-button></a></td>
+                            <td width="10px"><x-a href="{{route('prece.asistencia.create', $curso)}}">Tomar Asistencia</x-a></td>
                             <td width="10px"><a href="{{route('admin.cursos.show', $curso)}}" class="px-4 py-2 rounded-md font-semibold text-xs uppercase btn btn-primary">Ver Curso</a></td>
                         </tr>
                     @endforeach

@@ -19,7 +19,7 @@
                         <tr>
                             <td>{{$anuncio->title}}</td>
                             <td>{!!$anuncio->body ?? ''!!}</td>
-                            <td width="10px"><a href="{{route('admin.anuncio.create', ['id' => $anuncio->id])}}"><button class="btn btn-primary">editar</button></a></td>
+                            <td width="10px"><a href="{{route('admin.anuncio.create', ['id' => $anuncio->id])}}" class="btn btn-primary">Editar</a></td>
                             <td width="10px">
                                 <form action="{{route('admin.anuncio.destroy', $anuncio)}}" method="POST">
                                     @csrf

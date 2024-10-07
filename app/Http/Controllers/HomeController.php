@@ -14,16 +14,36 @@ class HomeController extends Controller
     public function welcome()
     {
         $users = User::role('admin')->pluck('id');
-        $anuncios = Anuncio::where('status', 2)->whereIn('user_id', $users)->latest('published')->paginate();
-        $user = Auth::user();
-        if ($user && $user->cursos){
+        $anuncios = Anuncio::where('status', 2)
+            ->whereIn('user_id', $users)
+            ->latest('published')
+            ->paginate();
 
-            $anunciosCurso = Anuncio::where('status', 2)
-                ->where('curso_id', $user->cursos->pluck('id'))
-                ->latest('published')
-                ->get();
+        $user = Auth::user();
+
+        if ($user && ($user->hasrole('profesor') || $user->hasrole('preceptor'))) {
+            $cursos = $user->cursos;
+
+            if ($cursos->isNotEmpty()) {
+                $anunciosCurso = Anuncio::where('status', 2)
+                    ->whereIn('curso_id', $cursos->pluck('id'))
+                    ->latest('published')
+                    ->get();
+
                 $anuncios = $anuncios->merge($anunciosCurso)->sortByDesc('published');
+            } 
+        }elseif ($user && $user->hasrole('alumno')) {
+            $cursoInscripcion = $user->inscripcion->curso;
+            if ($cursoInscripcion) {
+                $anunciosCurso = Anuncio::where('status', 2)
+                    ->where('curso_id', $cursoInscripcion->id)
+                    ->latest('published')
+                    ->get();
+
+                $anuncios = $anuncios->merge($anunciosCurso)->sortByDesc('published');
+            }
         }
+
         return view('welcome', compact('anuncios'));
     }
 

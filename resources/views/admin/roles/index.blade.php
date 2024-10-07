@@ -4,7 +4,7 @@
     <h1 class="font-semibold text-xl text-gray-800 leading-tight">
         Lista de Roles
     </h1>
-    <a href="{{route('admin.roles.create')}}"><x-button>Nuevo Rol</x-button></a>
+    <x-a href="{{route('admin.roles.create')}}">Nuevo Rol</x-a>
 @endsection
 @section('content')
     @if (session('success'))

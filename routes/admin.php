@@ -16,7 +16,7 @@ Route::get('/users', [UsersController::class, 'index'])->name('admin.users.index
 
 route::resource('configuracion', ConfiguracionController::class)->names('admin.configuracion');
 
-route::resource('mesas', MesaExamenController::class)->names('admin.mesas');
+route::resource('mesas', MesaExamenController::class)->except(['index'])->names('admin.mesas');
 
 route::resource('/cursos', CrearCursoController::class)->names('admin.cursos');
 

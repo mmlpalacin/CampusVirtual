@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('title', 'Asistencia')
 @section('header')
-    <a href="{{route('admin.cursos.show', $curso)}}"><x-button>Volver al Curso</x-button></a>
+    <x-a href="{{route('admin.cursos.show', $curso)}}">Volver al Curso</x-a>
     <h1 class="font-semibold text-xl text-gray-800 leading-tight">
         Lista de Asistencias: {{ request('turno', 'aula') === 'taller' ? 'Taller' : 'Aula' }}
     </h1>
-    <a href="{{route('prece.asistencia.create', $curso)}}"><x-button>Tomar Asistencia</x-button></a>
+    <x-a href="{{route('prece.asistencia.create', $curso)}}">Tomar Asistencia</x-a>
 @endsection
 @section('content')
 <form method="GET" action="{{ route('prece.asistencia.index', $curso) }}">

@@ -4,7 +4,7 @@
     <h1 class="font-semibold text-xl text-gray-800 leading-tight">
         Lista de Anuncios
     </h1>
-    <a href="{{route('admin.anuncio.create')}}"><x-button>Nuevo Anuncio</x-button></a>
+    <x-a href="{{route('admin.anuncio.create')}}">Nuevo Anuncio</x-a>
 @endsection
 @section('content')
     @livewire('lista-anuncios')

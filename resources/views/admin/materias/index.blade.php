@@ -4,7 +4,7 @@
     <h1 class="font-semibold text-xl text-gray-800 leading-tight">
         Lista de Materias
     </h1>
-    <a href="{{route('admin.materias.create')}}"><x-button>Nueva materia</x-button></a>
+    <x-a href="{{route('admin.materias.create')}}">Nueva materia</x-a>
 @endsection
 @section('content')
 @if (session('info'))

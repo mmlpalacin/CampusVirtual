@@ -33,7 +33,7 @@
                         <td>{{$curso->division->name}}</td>
                         <td>{{$curso->turno->name}}</td>
                         <td>{{$curso->especialidad->name}}</td>
-                        <td width="10px"><x-button><a href="{{route('horario', $curso)}}">Horario</a></x-button></td>
+                        <td width="10px"><x-a href="{{route('horario', $curso)}}">Horario</x-a></td>
                         <td width="10px"><a href="{{route('admin.cursos.show', $curso)}}" class="btn btn-secondary">Ver</a></td>
                         <td width="10px"><a href="{{route('admin.cursos.edit', $curso)}}" class="btn btn-primary">Editar</a></td>
                         <td width="10px">

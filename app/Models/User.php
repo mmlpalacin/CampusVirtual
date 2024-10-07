@@ -97,8 +97,6 @@ class User extends Authenticatable
         }elseif($this->hasRole('preceptor')){
             return $this->hasMany(Curso::class, 'preceptor_id')
             ->orWhere('preceptor_id_2', $this->id);
-        }elseif($this->hasRole('alumno')){
-            return $this->inscripcion()->with('curso');
         }
 
         return collect();

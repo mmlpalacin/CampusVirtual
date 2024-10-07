@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\MesaExamenController;
 use App\Http\Controllers\HomeController;
 use App\Models\Anuncio;
 use App\Models\User;
@@ -13,6 +14,7 @@ Route::middleware('auth')->group(function () {
     require __DIR__ . '/preceptor.php';
     require __DIR__ . '/cooperadora.php';
 });
+route::get('mesas', [MesaExamenController::class, 'index'])->name('admin.mesas.index');
 
 Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 

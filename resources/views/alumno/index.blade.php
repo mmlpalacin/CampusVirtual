@@ -8,7 +8,7 @@
         @csrf
         <x-button type="submit" class="mr-4">Imprimir Ficha</x-button>
     </form>
-    <a href="{{route('alumno.datos.form1', $inscripcion ?? null)}}"><x-button>Inscribirse</x-button></a>
+    <x-a href="{{route('alumno.datos.form1', $inscripcion ?? null)}}">Inscribirse</x-a>
 @endsection
 @section('content')
 <div class="mx-3">
