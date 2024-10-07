@@ -79,6 +79,15 @@ class CrearAnuncios extends Component
         $this->anuncio->load('image');
     }
 
+    public function deleteTempImage($tempPath)
+    {
+        if (($key = array_search($tempPath, $this->temporaryImagePaths)) !== false) {
+            Storage::disk('public')->delete($tempPath);
+            unset($this->temporaryImagePaths[$key]);
+            $this->temporaryImagePaths = array_values($this->temporaryImagePaths);
+        }
+    }
+
     public function submit()
     {
         $this->checkAuthorization();

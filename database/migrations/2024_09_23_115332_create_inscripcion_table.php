@@ -16,7 +16,7 @@ return new class extends Migration
 
             // Datos académicos
             $table->enum('nivel_cursado', ['ciclo basico', 'CESAJ', 'ciclo superior'])->default('ciclo basico')->nullable();
-            $table->string('year')->nullable();
+            $table->string('grado')->nullable();
             $table->enum('turno', ['mañana', 'tarde', 'noche', 'vespertino', 'intermedio'])->default('mañana')->nullable();
             $table->enum('jornada', ['simple', 'completa', 'extendida', 'doble escolaridad'])->default('doble escolaridad')->nullable();
             $table->enum('condicion_alumno', ['ingresante', 'reinscripto', 'promovido', 'repitente'])->nullable();
@@ -25,9 +25,9 @@ return new class extends Migration
             // Datos personales
             $table->string('tipo_documento', 20)->nullable();
             $table->string('dni', 45)->nullable();
-            $table->boolean('estado_documento');
+            $table->boolean('estado_documento')->nullable();
             $table->enum('posesion', ['posee', 'en tramite', 'no posee'])->nullable();
-            $table->foreignId('genero_id')->constrained('generos')->nullable();
+            $table->foreignId('genero_id')->nullable()->constrained('generos');
             $table->string('nacionalidad')->nullable();
             $table->string('lugar_nac')->nullable();
             $table->date('fecha_nac')->nullable();
@@ -49,7 +49,7 @@ return new class extends Migration
             // Información adicional
             $table->integer('cantidad_hermanos')->nullable();
             $table->integer('cantidad_habitantes_hogar')->nullable();
-            $table->enum('medio_transporte', ['a pie', 'omnibus', 'auto particular', 'taxi/remis', 'otro'])->default('omnibus');
+            $table->enum('medio_transporte', ['a pie', 'omnibus', 'auto particular', 'taxi/remis', 'otro'])->default('omnibus')->nullable();
             $table->string('medio_transporte_otro')->nullable();
 
             // Salud y obra social

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ConfiguracionController;
 use App\Http\Controllers\Admin\MesaExamenController;
 use App\Http\Controllers\Admin\CrearCursoController;
 use App\Http\Controllers\Admin\CrearRolController;
+use App\Http\Controllers\Admin\MateriaController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AnuncioController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,8 @@ route::resource('/cursos', CrearCursoController::class)->names('admin.cursos');
 
 route::resource('roles', CrearRolController::class)->names('admin.roles')->middleware('can:admin.roles.index');
 
+route::resource('materias', MateriaController::class)->names('admin.materias');
+
 Route::match(['get', 'post'],'/cursos/{curso}/horario', function ($cursoId) {
     $curso = Curso::findOrFail($cursoId); // Busca el curso por ID
     $configuracion = Configuracion::orderBy('ciclo_lectivo', 'desc')->first();
@@ -29,4 +32,4 @@ Route::match(['get', 'post'],'/cursos/{curso}/horario', function ($cursoId) {
 
 route::get('anuncios', [AnuncioController::class, 'index'])->name('admin.anuncio.index')->middleware('can:admin.anuncio.index');
 route::get('anuncios/anuncio/{id?}', [AnuncioController::class, 'create'])->name('admin.anuncio.create')->middleware('can:admin.anuncio.create');
-route::get('anuncios/id', [AnuncioController::class, 'destroy'])->name('admin.anuncio.destroy')->middleware('can:admin.anuncio.destroy');
+route::delete('anuncios/{anuncio}', [AnuncioController::class, 'destroy'])->name('admin.anuncio.destroy')->middleware('can:admin.anuncio.destroy');

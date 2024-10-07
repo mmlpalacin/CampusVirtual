@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('direccion', 45)->nullable();
             $table->string('telefono', 45)->nullable();
-            $table->year('ciclo_lectivo');
+            $table->year('ciclo_lectivo')->unique();
             $table->json('grados')->nullable();
             $table->json('cooperadora');
             $table->json('jornadas');

@@ -16,7 +16,7 @@ class AcademicDataRequest extends FormRequest
     {
         return [
             'nivel_cursado' => 'required|in:ciclo basico,CESAJ,ciclo superior',
-            'year' => 'required|string',
+            'grado' => 'required|string',
             'turno' => 'required|in:mañana,tarde,noche,vespertino,intermedio',
             'jornada' => 'required|in:simple,completa,extendida,doble escolaridad',
             'condicion_alumno' => 'nullable|in:ingresante,reinscripto,promovido,repitente',
@@ -28,7 +28,7 @@ class AcademicDataRequest extends FormRequest
     {
         return [
             'nivel_cursado.required' => 'El nivel es obligatorio.',
-            'year.required' => 'El año es obligatorio.',
+            'grado.required' => 'El año es obligatorio.',
             'turno.required' => 'El turno es obligatorio.',
             'jornada.required' => 'La jornada es obligatoria.',
         ];

@@ -2,7 +2,6 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
@@ -41,20 +40,25 @@
                         </x-dropdown>
                     </div>
                 </div>
-                    
+                
                 <!-- Navigation Links -->
                 @can('prece.curso.index')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="{{ route('prece.curso.index') }}" :active="request()->routeIs('prece.curso.index')">
-                            Mis Cursos
-                        </x-nav-link>
+                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                    <x-nav-link href="{{ route('prece.curso.index') }}">
+                        Mis Cursos
+                    </x-nav-link>
                     </div>
                 @endcan
-            </div>
     
             @can('alumno.datos.index')
-            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link href="{{ route('alumno.datos.index') }}" :active="request()->routeIs('alumno.datos.index')">
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <x-nav-link href="{{ route('alumno.boletin', ['user' => auth()->user()])}}">
+                    Boletin
+                </x-nav-link>
+            </div>
+
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <x-nav-link href="{{ route('alumno.datos.index') }}">
                     Mis Datos
                 </x-nav-link>
             </div>
@@ -138,7 +142,18 @@
                                     Nuevo Curso
                                 </x-dropdown-link>
                             </div>
-                            @endcan    
+                            @endcan
+                            @can('admin.materias.index')
+                            <div>
+                                <p class="block px-4 py-2 text-xs text-gray-400">Materias</p>
+                                <x-dropdown-link href="{{route('admin.materias.index')}}">
+                                    Lista de Materias
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{route('admin.materias.create')}}">
+                                    Nuevo Materia
+                                </x-dropdown-link>
+                            </div>
+                            @endcan 
                         </x-slot>
                     </x-dropdown>
                 </div>

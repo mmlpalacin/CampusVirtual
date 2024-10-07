@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anuncio;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class AnuncioController extends Controller
 {
@@ -12,10 +12,24 @@ class AnuncioController extends Controller
         return view('anuncios.index');
     }
 
-    public function create ($id = null)
+    public function create($id = null)
     {
-        $anuncio =  $id ? anuncio::findOrFail($id) : null;
-        Log::info($anuncio);
+        $anuncio = $id ? Anuncio::findOrFail($id) : null;
+
+        if ($anuncio && Auth::user()->id != $anuncio->user_id) {
+            abort(403, 'No tienes permiso para editar este anuncio.');
+        }
+
         return view('anuncios.create', compact('anuncio'));
+    }
+    
+    public function destroy (Anuncio $anuncio)
+    {
+        if ($anuncio && Auth::user()->id != $anuncio->user_id) {
+            abort(403, 'No tienes permiso para editar este anuncio.');
+        }
+        $anuncio->delete();
+        
+        return redirect()->route('admin.anuncio.index')->with('info','El anuncio se elimino con exito');
     }
 }

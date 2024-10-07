@@ -14,6 +14,9 @@ return new class extends Migration
             $table->foreignId('turno_id')->nullable()->constrained('turnos')->onDelete('cascade');
             $table->foreignId('division_id')->nullable()->constrained('division')->onDelete('cascade');
             $table->foreignId('especialidad_id')->nullable()->constrained('especialidad')->onDelete('cascade');
+            $table->unsignedBigInteger('preceptor_id')->nullable();
+            $table->unsignedBigInteger('preceptor_id_2')->nullable();
+
             $table->timestamps();
         });
     }

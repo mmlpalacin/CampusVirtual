@@ -34,4 +34,9 @@ class Materia extends Model
     {
         return $this->hasManyThrough(User::class, Horario::class, 'materia_id', 'id', 'id', 'profesor_id');
     }
+    
+    public function notas()
+    {
+        return $this->hasMany(Nota::class);
+    }
 }

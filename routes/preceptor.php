@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\Preceptor\AsistenciaController;
-use App\Models\Curso;
 use Illuminate\Support\Facades\Route;
+use App\Models\Curso;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/mis-cursos', function () {
-    $cursos = Curso::all();
+    $cursos = Auth::user()->cursos;
     return view('preceptor.lista-cursos', compact('cursos'));
 })->name('prece.curso.index'); //modificar
 

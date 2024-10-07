@@ -13,8 +13,8 @@ use Spatie\Permission\Models\Role;
 class UserAsignacion extends Component
 {
     public $roles, $cursos, $materias, $user;
-    public $selectedRole, $selectedCurso, $asignaciones =[];
-
+    public $selectedRole, $selectedCurso, $asignaciones = [], $preceptor = [];
+    
     public function mount($user)
     {
         $this->user = $user;
@@ -26,8 +26,16 @@ class UserAsignacion extends Component
             $this->asignaciones = $this->loadAsignacion();
         }elseif ($user->hasRole('alumno')) {
             $this->selectedCurso = $user->inscripcion ? $user->inscripcion->curso_id : null;
-        } else {
-            $this->selectedCurso = [];
+        }elseif($user->hasRole('preceptor')) {
+            foreach ($this->cursos as $curso) {
+                $this->preceptor[$curso->id] = [
+                    'curso_id' => $curso->id,
+                    'preceptor_tipo' => [
+                        'aula' => $curso->preceptor1()->exists() && $curso->preceptor1->id == $user->id,
+                        'taller' => $curso->preceptor2()->exists() && $curso->preceptor2->id == $user->id,
+                    ],
+                ];
+            }
         }
         $this->selectedRole = $user->roles->first()->id ?? null;
     }
@@ -74,11 +82,21 @@ class UserAsignacion extends Component
             $validationRules['asignaciones.*.hora_fin'] = 'nullable|date_format:H:i|after:asignaciones.*.hora_inicio';
         }
 
+        if ($this->user->hasRole('preceptor')) {
+            $validationRules['preceptor'] = 'required|array';    
+            foreach ($this->preceptor as $cursoId => $cursoData) {
+                $validationRules['preceptor.' . $cursoId . '.curso_id'] = 'required|exists:cursos,id';
+                $validationRules['preceptor.' . $cursoId . '.preceptor_tipo'] = 'required|array';
+                $validationRules['preceptor.' . $cursoId . '.preceptor_tipo.aula'] = 'nullable|boolean';
+                $validationRules['preceptor.' . $cursoId . '.preceptor_tipo.taller'] = 'nullable|boolean';
+            }
+        }        
+
         $this->validate($validationRules);
 
         $this->user->roles()->sync([$this->selectedRole]);
 
-        if ($this->user->roles('alumno')) {
+        if ($this->user->hasrole('alumno')) {
             $Inscripcion = Inscripcion::where('user_id', $this->user->id)->latest()->first();
             if(isset($Inscripcion)){
                 $Inscripcion->update([
@@ -92,27 +110,55 @@ class UserAsignacion extends Component
             }
         }
 
-        foreach ($this->asignaciones as $asignacion) {
-            if(isset($asignacion['id'])){
-                if ($asignacion['curso_id'] && $asignacion['materia_id'] && $asignacion['dia']) {
-                    Horario::where('id', $asignacion['id'])->update([
+        if ($this->user->hasrole('profesor')) {
+            foreach ($this->asignaciones as $asignacion) {
+                if(isset($asignacion['id'])){
+                    if ($asignacion['curso_id'] && $asignacion['materia_id'] && $asignacion['dia']) {
+                        Horario::where('id', $asignacion['id'])->update([
+                            'profesor_id' => $this->user->id,
+                            'curso_id' => $asignacion['curso_id'],
+                            'materia_id' => $asignacion['materia_id'],
+                            'dia' => $asignacion['dia'],
+                            'hora_inicio' => $asignacion['hora_inicio'],
+                            'hora_fin' => $asignacion['hora_fin']
+                        ]);
+                    }
+                }else {
+                    Horario::create([
                         'profesor_id' => $this->user->id,
                         'curso_id' => $asignacion['curso_id'],
                         'materia_id' => $asignacion['materia_id'],
-                        'dia' => $asignacion['dia'],
-                        'hora_inicio' => $asignacion['hora_inicio'],
-                        'hora_fin' => $asignacion['hora_fin']
+                        'dia' => !empty($asignacion['dia']) ? $asignacion['dia'] : null,
+                        'hora_inicio' => !empty($asignacion['hora_inicio']) ? $asignacion['hora_inicio'] : null,
+                        'hora_fin' => !empty($asignacion['hora_fin']) ? $asignacion['hora_fin'] : null,
                     ]);
                 }
-            }else {
-                Horario::create([
-                    'profesor_id' => $this->user->id,
-                    'curso_id' => $asignacion['curso_id'],
-                    'materia_id' => $asignacion['materia_id'],
-                    'dia' => !empty($asignacion['dia']) ? $asignacion['dia'] : null,
-                    'hora_inicio' => !empty($asignacion['hora_inicio']) ? $asignacion['hora_inicio'] : null,
-                    'hora_fin' => !empty($asignacion['hora_fin']) ? $asignacion['hora_fin'] : null,
-                ]);
+            }
+        }
+
+        if ($this->user->hasRole('preceptor')) {
+            foreach ($this->preceptor as $curso) {
+                if (!empty($curso['curso_id'])) {
+                    $cursoModel = Curso::find($curso['curso_id']);
+                    if ($cursoModel) {
+                        $currentPreceptorAula = $cursoModel->preceptor1()->first();
+                        $currentPreceptorTaller = $cursoModel->preceptor2()->first();
+    
+                        if ($curso['preceptor_tipo']['aula']) {
+                            $cursoModel->preceptor1()->associate($this->user);
+                        } elseif ($currentPreceptorAula) {
+                            $cursoModel->preceptor1()->dissociate();
+                        }
+    
+                        if ($curso['preceptor_tipo']['taller']) {
+                            $cursoModel->preceptor2()->associate($this->user);
+                        } elseif ($currentPreceptorTaller) {
+                            $cursoModel->preceptor2()->dissociate();
+                        }
+    
+                        $cursoModel->save();
+                    }
+                }
             }
         }
 

@@ -71,6 +71,7 @@
         <div class="form-group">
             <label for="tipo_evaluacion">Tipo De Evaluación</label>
             <select id="tipo_evaluacion" wire:model="tipo_evaluacion" class="form-control" required>
+                <option value="">Seleccione opcion</option>
                 <option value="numerica">Numérica</option>
                 <option value="letras">Letras</option>
             </select>

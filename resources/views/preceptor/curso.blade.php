@@ -1,22 +1,27 @@
 @extends('layouts.app')
 @section('title', $curso->name . "°" . $curso->division->name)
 @section('header')
+    @can('prece.asistencia.create')
+        <a href="{{route('prece.asistencia.index', $curso)}}"><x-button>Ver Asistencia</x-button></a>
+    @endcan
     <h1 class="font-semibold text-xl text-gray-800 leading-tight">
         {{$curso->name}} ° {{$curso->division->name}}
     </h1>
+    @can('profe.boletin')
+        <a href="{{route('profe.notas.edit', $curso->id)}}"><x-button>Lista de Notas</x-button></a>
+    @endcan
+    @can('prece.asistencia.create')
+        <a href="{{route('prece.asistencia.create', $curso)}}"><x-button>Tomar Asistencia</x-button></a>
+    @endcan
 @endsection
 @section('content')
 <div class="card">
     <div class="card-body">
+        <h3 class="h3 mb-3">Alumnos</h3>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Alumnos</th>
-                    @can('prece.asistencia.create')
-                        <th width="10px"><a href="{{route('prece.asistencia.create', $curso)}}"><x-button>Tomar Asistencia</x-button></a></th>
-                        <th width="10px"><a href="{{route('prece.asistencia.index', $curso)}}"><x-button>Ver Asistencia</x-button></a></th>
-                    @endcan   
-                    <th colspan="3"></th>
+                    <th>Apellido y Nombre</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +29,7 @@
                 <tr>
                     <td>{{ $alumno->lastname }}, {{ $alumno->name }}<input type="hidden" name="id[]" value="{{ $alumno->id }}"></td>
                     @can('profe.boletin')
-                        <td width="10px"><a href=""><x-button>Boletin</x-button></a></td>
+                        <td width="10px"><a href="{{ route('alumno.boletin', ['user' => $alumno])}}"><x-button>Boletin</x-button></a></td>
                     @endcan
                 </tr>
             @endforeach
@@ -32,44 +37,45 @@
         </table>
     </div>
     <x-section-border />
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1 class="h3">Horario</h1>
-            @can('admin.horario.edit')
-                <a href="{{ route('horario', $curso) }}"><x-button>Horario</x-button></a>
-            @endcan
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Hora</th>
-                    @foreach ($dias as $dia)
-                        <th>{{ $dia }}</th>
-                    @endforeach
-                    <th colspan="7"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($horas as $hora)
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="h3">Horario</h3>
+                @can('admin.horario.edit')
+                    <a href="{{ route('horario', $curso) }}"><x-button>Horario</x-button></a>
+                @endcan
+            </div>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ $hora->hora_inicio }} <br> {{ $hora->hora_fin }}</td>
+                        <th>Hora</th>
                         @foreach ($dias as $dia)
-                            <td>
-                                @php
-                                    $horaDia = $horarios->get($dia, collect())->firstWhere('hora_inicio', $hora->hora_inicio);
-                                @endphp
-                                @if ($horaDia)
-                                    {{ $horaDia->materia->name }}<br>
-                                    @if ($horaDia->profesor)
-                                        {{ $horaDia->profesor->lastname }}, {{ $horaDia->profesor->name }}
-                                    @endif
-                                @endif
-                            </td>
+                            <th>{{ $dia }}</th>
                         @endforeach
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($horas as $hora)
+                        <tr>
+                            <td>{{ $hora->hora_inicio }} <br> {{ $hora->hora_fin }}</td>
+                            @foreach ($dias as $dia)
+                                <td>
+                                    @php
+                                        $horaDia = $horarios->get($dia, collect())->firstWhere('hora_inicio', $hora->hora_inicio);
+                                    @endphp
+                                    @if ($horaDia)
+                                        {{ $horaDia->materia->name }}<br>
+                                        @if ($horaDia->profesor)
+                                            {{ $horaDia->profesor->lastname }}, {{ $horaDia->profesor->name }}
+                                        @endif
+                                    @endif
+                                </td>
+                            @endforeach
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
     <x-section-border />
 

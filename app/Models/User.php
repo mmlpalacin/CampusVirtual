@@ -60,6 +60,11 @@ class User extends Authenticatable
     public function inscripcion(){
         return $this->hasOne(Inscripcion::class);
     }
+    
+    public function boletines()
+    {
+        return $this->hasMany(Boletin::class);
+    }
 
     public function scopeAlumnosPorCurso(Builder $query, $cursoId)
     {
@@ -87,7 +92,16 @@ class User extends Authenticatable
 
     public function cursos()
     {
-        return $this->hasManyThrough(Curso::class, Horario::class, 'profesor_id', 'id', 'id', 'curso_id');
+        if($this->hasRole('profesor')){
+            return $this->hasManyThrough(Curso::class, Horario::class, 'profesor_id', 'id', 'id', 'curso_id');
+        }elseif($this->hasRole('preceptor')){
+            return $this->hasMany(Curso::class, 'preceptor_id')
+            ->orWhere('preceptor_id_2', $this->id);
+        }elseif($this->hasRole('alumno')){
+            return $this->inscripcion()->with('curso');
+        }
+
+        return collect();
     }
 
     public function materias()

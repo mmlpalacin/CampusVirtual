@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Configuracion;
 use App\Models\Cooperadora;
+use App\Models\Inscripcion;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -73,6 +74,10 @@ class UserSeeder extends Seeder
         Cooperadora::create([
             'user_id' => $user->id,
             'configuracion_id' => $configuracion->id,
+        ]);
+        Inscripcion::create([
+            'user_id' => $user->id,
+            'curso_id' => 1,
         ]);
 
         $users = User::factory(10)->create();

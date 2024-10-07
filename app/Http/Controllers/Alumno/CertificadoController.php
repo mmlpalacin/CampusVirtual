@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Alumno;
 
-use App\Http\Controllers\Controller;
-use App\Models\Inscripcion;
 use App\Models\User;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Materia;
+use App\Models\Boletin;
 use Illuminate\Http\Request;
+use App\Models\Configuracion;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class CertificadoController extends Controller
 {
@@ -18,7 +19,7 @@ class CertificadoController extends Controller
             'autoridades' => 'required'
         ]);
         $user = Auth::user();
-        Log::info($user . $user->inscripcion . $user->inscripcion->curso);
+
         $user = [
             'name' => $user->lastname . ', ' . $user->name,
             'curso' =>  $user->inscripcion->curso->name . ' ' . $user->inscripcion->curso->division->name . ', ' . $user->inscripcion->curso->especialidad->name,
@@ -32,5 +33,29 @@ class CertificadoController extends Controller
         $pdf = Pdf::loadView('alumno.certificado', ['user' =>$user]);
 
         return $pdf->stream('certificado_alumno.pdf');
+    }
+
+    public function boletin(User $user)
+    {
+        $asistencias = $user->asistencias;
+        if($asistencias){
+            $ausencias = $asistencias->filter(function ($asistencia) {
+                return $asistencia->estado === 'ausente';
+            })->count();
+        
+            $tardanzas = $asistencias->filter(function ($asistencia) {
+                return $asistencia->estado === 'tarde';
+            })->count();
+        
+            $total = ($ausencias * 0.5) + ($tardanzas * 0.25);
+        }else{
+            $total = 0;
+        }
+
+        $configuracion = Configuracion::orderBy('ciclo_lectivo', 'desc')->first();
+        $materias = Materia::MateriasPorCurso($user->inscripcion->curso->id)->get();
+        $boletin = Boletin::UltimoBoletin($user->id);
+
+        return view('alumno.boletin', compact('configuracion','boletin', 'total', 'user', 'materias'));
     }
 }

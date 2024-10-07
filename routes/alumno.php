@@ -33,3 +33,5 @@ Route::middleware(['can:alumno.datos.create'])->group(function () {
 });
 
 Route::post('/generando-certificado/{user}', [CertificadoController::class, 'certificado'])->name('alumno.certificado');
+
+Route::get('/boletin/{user}', [CertificadoController::class, 'boletin'])->name('alumno.boletin')->middleware('can:alumno.boletin');

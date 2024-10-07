@@ -23,7 +23,7 @@
                         <tr>
                             <td>{{$curso->name}}</td>
                             <td>{{$curso->division->name}}</td>
-                            <td>{{$curso->turno->turno}}</td>
+                            <td>{{$curso->turno->name}}</td>
                             <td>{{$curso->especialidad->name}}</td>
     
                             @can('admin.horario.edit')

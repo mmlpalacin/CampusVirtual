@@ -58,10 +58,10 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'admin.horario.edit', 'description' => 'Editar horarios'])->syncRoles([$role1, $role2]);
        
         //profesor
-        Permission::create(['name' => 'profe.boletin', 'description' => 'Editar boletin del alumno'])->syncRoles([$role2, $role3]);
+        Permission::create(['name' => 'profe.boletin', 'description' => 'Editar boletin del alumno'])->syncRoles([$role3]);
 
         //alumnos
-        Permission::create(['name' => 'alumno.boletin', 'description' => 'Ver boletin del alumno'])->syncRoles($role4);
+        Permission::create(['name' => 'alumno.boletin', 'description' => 'Ver boletin del alumno'])->syncRoles([$role4, $role2, $role3]);
         Permission::create(['name' => 'alumno.datos.index', 'description' => 'Ver datos del alumno'])->syncRoles($role4);
         Permission::create(['name' => 'alumno.datos.create', 'description' => 'Crear formulario con datos del alumno'])->syncRoles($role4);
         Permission::create(['name' => 'alumno.datos.edit', 'description' => 'Editar los datos del alumno'])->syncRoles($role4);

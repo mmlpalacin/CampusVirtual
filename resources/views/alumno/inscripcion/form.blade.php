@@ -18,9 +18,9 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="year">Año</label>
+                <label for="grado">Año</label>
                 @foreach ($grados as $item)
-                    {{$item}}<input type="radio" name="year" id="year" value="{{$item}}" {{ old('year', $inscripcion->year ?? '') == $item ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>
+                    {{$item}}<input type="radio" name="grado" id="grado" value="{{$item}}" {{ old('grado', $inscripcion->grado ?? '') == $item ? 'checked' : '' }} {{ $editable ? '' : 'disabled' }}>
                 @endforeach
             </div>
         </div>

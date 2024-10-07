@@ -14,8 +14,8 @@ return new class extends Migration
             $table->foreignId('curso_id')->constrained('cursos')->onDelete('cascade');
             $table->foreignId('profesor_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('dia', 45)->nullable();
-            $table->time('hora_inicio');
-            $table->time('hora_fin');
+            $table->time('hora_inicio')->nullable();
+            $table->time('hora_fin')->nullable();
             $table->unique(['curso_id', 'materia_id', 'dia', 'hora_inicio', 'hora_fin']);
             $table->timestamps();
         });
