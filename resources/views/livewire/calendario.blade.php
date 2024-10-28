@@ -4,7 +4,7 @@
             Anterior
         </button>
         <div class="text-center text-l font-bold py-2 px-4">
-            {{ ucfirst($monthName)}} <br> <p class="mb-1 font-bold card-text small">Faltas/Total de Asistencias: {{$promedio}}%</p>
+            {{ ucfirst($monthName)}} <br> <p class="mb-1 font-bold card-text small">Faltas/Total de Inasistencias: {{$promedio}}%</p>
         </div>
         <button wire:click="nextWeek" class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
             Siguiente

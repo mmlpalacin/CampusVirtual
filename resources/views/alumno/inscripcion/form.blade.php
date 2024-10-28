@@ -1,7 +1,8 @@
+@vite(['resources/css/form.css', 'resources/js/app.js', 'resources/css/app.css'])
+@livewireScripts
 @if ($editable === true)
     @livewire('navigation-menu')
 @endif
-@vite(['resources/css/form.css', 'resources/css/app.css', 'resources/js/form.js'])
 <x-validation-errors/>
     <form action="{{route('alumno.datos.form1.store', $inscripcion ?? null)}}" method="POST" class="mt-4">
         @csrf

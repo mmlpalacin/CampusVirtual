@@ -47,7 +47,7 @@ class CertificadoController extends Controller
                 return $asistencia->estado === 'tarde';
             })->count();
         
-            $total = ($ausencias * 0.5) + ($tardanzas * 0.25);
+            $total = $ausencias + ($tardanzas * 0.5);
         }else{
             $total = 0;
         }

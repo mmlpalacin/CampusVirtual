@@ -1,6 +1,7 @@
+@vite(['resources/css/form.css', 'resources/js/app.js', 'resources/css/app.css'])
+@livewireScripts
 @if ($editable === true)
 @livewire('navigation-menu')
-@vite(['resources/css/form.css', 'resources/css/app.css', 'resources/js/form.js'])
 @endif
 <x-validation-errors/>
 <form action="{{route('alumno.datos.form4.store', $inscripcion ?? null)}}" method="post" class="mt-4">
@@ -34,8 +35,11 @@
     </div>
     <x-section-border />
     @if ($editable === true)
-    <div class="flex items-center justify-end">
-        <x-button>Siguente</x-button>
+    <div class="flex items-center justify-between">
+        <x-a href="{{ route('alumno.datos.form3', $inscripcion ?? null) }}">Anterior</x-a>
+        <div class="flex items-center justify-end">
+            <x-button>Siguente</x-button>
+        </div>
     </div>
     @endif
 </form>

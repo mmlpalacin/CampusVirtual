@@ -13,13 +13,53 @@
 @section('content')
 <div class="mx-3">
     @if ($inscripcion)
-        @include('alumno.inscripcion.form')
-        @include('alumno.inscripcion.form2')
-        @include('alumno.inscripcion.form3')
-        @include('alumno.inscripcion.form4')  
-        @include('alumno.inscripcion.form5')  
+        <div class="button-group">
+            <button type="button" class="btn bg-white" onclick="showForm('form1')">Datos Académicos</button>
+            <button type="button" class="btn bg-white" onclick="showForm('form2')">Datos Personales</button>
+            <button type="button" class="btn bg-white" onclick="showForm('form3')">Dirección y Contacto</button>
+            <button type="button" class="btn bg-white" onclick="showForm('form4')">Datos Adicionales</button>
+            <button type="button" class="btn bg-white" onclick="showForm('form5')">Datos de Salud</button>
+            <button type="button" class="btn bg-white" onclick="showForm('padres')">Datos de Padres</button>
+        </div>
+
+        <div id="form1" class="form-section" style="display: block;">
+            @include('alumno.inscripcion.form')
+        </div>
+        
+        <div id="form2" class="form-section" style="display: none;">
+            @include('alumno.inscripcion.form2')
+        </div>
+        
+        <div id="form3" class="form-section" style="display: none;">
+            @include('alumno.inscripcion.form3')
+        </div>
+        
+        <div id="form4" class="form-section" style="display: none;">
+            @include('alumno.inscripcion.form4')
+        </div>
+        
+        <div id="form5" class="form-section" style="display: none;">
+            @include('alumno.inscripcion.form5')
+        </div>
+
+        <div id="padres" class="form-section" style="display: none;">
+            @include('alumno.inscripcion.padres') <!-- Asegúrate de tener este archivo incluido -->
+        </div>
     @else
-        Todavia no te inscribiste
+        Todavía no te inscribiste
     @endif
 </div>
+
+<script>
+    function showForm(formId) {
+        const forms = document.querySelectorAll('.form-section');
+        forms.forEach(form => {
+            if (form.id === formId) {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        });
+    }
+</script>
 @endsection

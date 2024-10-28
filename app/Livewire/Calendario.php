@@ -73,8 +73,8 @@ class Calendario extends Component
                 return $asistencia->estado === 'tarde';
             })->count();
             
-            $totalFaltas = ($ausencias * 0.5) + ($tardanzas * 0.25);
-            $totalAsistencias = $asistencias->count()* 0.5;
+            $totalFaltas = $ausencias + ($tardanzas * 0.5);
+            $totalAsistencias = $asistencias->count();
             
             $promedio = $totalAsistencias > 0 ? round(($totalFaltas / $totalAsistencias) * 100, 2) : 0;
         $monthName = $currentMonth->locale('es')->translatedFormat('F Y');

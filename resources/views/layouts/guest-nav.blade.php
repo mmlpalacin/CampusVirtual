@@ -25,7 +25,7 @@
             
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <a href="{{ route('dashboard') }}" class="inline-flex items-center px-3 py-2">
-                    <img class="h-10 w-10 rounded-full object-cover" src="https://www.tecnica3mdp.edu.ar/imagenes/loguito.png"/>
+                    <x-authentication-card-logo/>
                 </a>
             </div>
             

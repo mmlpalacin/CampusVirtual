@@ -36,8 +36,9 @@ class FormController extends Controller
         $inscripcion = Inscripcion::where('user_id', $user->id)->first();
         $configuracion = Configuracion::orderBy('ciclo_lectivo', 'desc')->first();
         $grados = $configuracion->grados;
+        $padres = AdultosResponsables::where('inscripcion_id', $inscripcion->id)->get();
         $editable = false;
-        return view('alumno.index', compact('editable', 'grados', 'inscripcion','user', 'paises', 'provincias', 'partidos', 'ciudades', 'generos'));
+        return view('alumno.index', compact('editable', 'grados', 'padres', 'inscripcion','user', 'paises', 'provincias', 'partidos', 'ciudades', 'generos'));
     }
 
     public function form1(Inscripcion $inscripcion){
@@ -140,7 +141,7 @@ class FormController extends Controller
         $ciudades = [];
 
         $editable = true;
-        return view('alumno.inscripcion.padres', compact('editable', 'padres','paises', 'provincias', 'partidos', 'ciudades'));
+        return view('alumno.inscripcion.padres', compact('editable', 'inscripcion','padres','paises', 'provincias', 'partidos', 'ciudades'));
     }
 
     public function PadresStore(AdultosResponsables $padres, TutorRequest $request)
@@ -197,7 +198,7 @@ class FormController extends Controller
         $configuracion = Configuracion::orderBy('ciclo_lectivo', 'desc')->first();
         $grados = $configuracion->grados;
         $inscripcion = Inscripcion::where('user_id', $user->id)->first();
-        $padres = AdultosResponsables::where('inscripcion_id', $inscripcion->id);
+        $padres = AdultosResponsables::where('inscripcion_id', $inscripcion->id)->get();
         $editable = false;
         $pdf = Pdf::loadView('alumno.imprimir', compact('editable', 'grados', 'padres', 'inscripcion','user', 'paises', 'provincias', 'partidos', 'ciudades', 'generos'));
         return $pdf->stream('ficha_de_inscripcion.pdf');
