@@ -1,13 +1,5 @@
-<x-form-section submit="submit">
-    <x-slot name="title">
-        {{ __('Pagar Cooperadora') }}
-    </x-slot>
-
-    <x-slot name="description">
-        {{ __('Completa el formulario para pagar la cooperadora.') }}
-    </x-slot>
-
-    <x-slot name="form">
+<form submit="submit" class="px-4 py-5 bg-white mt-3 rounded">
+    
         <!-- Monto -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="monto" value="{{ __('Monto') }}" />
@@ -18,7 +10,7 @@
         </div>
 
         <!-- Comprobante -->
-        <div class="col-span-6 sm:col-span-4 flex items-center" x-data="{ imagePreview: null }">
+        <div class="col-span-6 sm:col-span-4 flex items-center mt-4" x-data="{ imagePreview: null }">
             <x-label for="image" value="{{ __('Subir Comprobante') }}" />
             <input type="file" id="image" class="hidden" wire:model="image" x-ref="image"
                 x-on:change="
@@ -51,14 +43,12 @@
                 <p class="text-red-600 mt-2">{{ $message }}</p>
             @enderror
         </div>
-    </x-slot>
 
-    <x-slot name="actions">
         <x-action-message class="me-3" on="saved">
             {{ __('Pago registrado correctamente.') }}
         </x-action-message>
-        <x-button wire:loading.attr="disabled">
+        <x-button wire:loading.attr="disabled" class="mt-4">
             {{ __('Enviar Comprobante') }}
         </x-button>
-    </x-slot>
-</x-form-section>
+
+    </form>

@@ -1,4 +1,4 @@
-<div class="mx-2 ">
+<div class="mx-5">
     <div class="flex justify-between mb-4">
         <button wire:click="previousWeek" class="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
             Anterior
@@ -11,7 +11,7 @@
         </button>
     </div>
 
-    <table class="table-auto border-collapse w-full">
+    <table class="table-auto border-collapse w-full bg-white">
         <thead>
             <tr>
                 <th class="px-4 py-2 border">Dom</th>

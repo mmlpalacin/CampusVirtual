@@ -207,11 +207,6 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                Cuenta
-                            </div>
-
                             <x-dropdown-link href="{{ route('dashboard') }}">
                                 Perfil
                             </x-dropdown-link>

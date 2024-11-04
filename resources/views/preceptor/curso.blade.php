@@ -82,6 +82,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <h3 class="h3">Anuncios del Curso</h3>
             @foreach ($curso->anuncio as $index => $anuncio) 
                 <div class="bg-white overflow-hidden pb-3 shadow-xl mt-4 sm:rounded-lg">
                     <p class="mb-1 card-text small text-muted mt-4 ml-4 text-left">{{$anuncio->published}}</p>
